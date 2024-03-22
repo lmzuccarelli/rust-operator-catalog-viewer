@@ -1,0 +1,38 @@
+{
+  "kind": "ImageStream",
+  "apiVersion": "image.openshift.io/v1",
+  "metadata": {
+    "name": "4.14.6",
+    "creationTimestamp": "2023-12-07T10:07:46Z",
+    "annotations": {
+      "release.openshift.io/from-image-stream": "test",
+      "release.openshift.io/from-release": "test"
+    }
+  },
+  "spec": {
+    "lookupPolicy": {
+      "local": false
+    },
+    "tags": [
+      {
+        "name": "test-simple-operator",
+        "annotations": {
+          "io.openshift.build.commit.id": "test",
+          "io.openshift.build.commit.ref": "",
+          "io.openshift.build.source-location": "https://test/test"
+        },
+        "from": {
+          "kind": "DockerImage",
+          "name": "quay.io/openshift-release-dev/ocp-v4.0-art-dev@:sha256:ade18f2994669ebeb870b3b545f8b48574da9fc26ea24341dd1c16faac9994a0"
+        },
+        "generation": null,
+        "importPolicy": {},
+        "referencePolicy": {
+          "type": ""
+        }
+      }
+   ]},
+   "status": {
+    "dockerImageRepository": ""
+  }
+}

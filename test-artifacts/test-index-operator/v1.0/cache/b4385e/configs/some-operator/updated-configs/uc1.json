@@ -1,0 +1,10 @@
+{
+"schema":"olm.channel",
+"name":"alpha",
+"package":"aws-load-balancer-operator",
+"entries":[
+{
+"name":"aws-load-balancer-operator.v0.0.1"
+}
+]
+}

@@ -37,7 +37,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cfg = args.config.as_ref().unwrap().to_string();
     let level = args.loglevel.unwrap().to_string();
     let ui = args.ui.unwrap();
-    let base_dir = args.base_dir.unwrap();
+    let base_dir = args.base_dir.unwrap() + "/";
     let dev_enabled = args.dev_enable.unwrap();
     let operator = args.operator.unwrap();
 

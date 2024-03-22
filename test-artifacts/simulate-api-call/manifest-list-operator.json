@@ -1,0 +1,15 @@
+{
+    "manifests": [
+        {
+            "digest": "sha256:81dca6a193f7cf024ebdd453af0b257615f518c8ef59ba24dab5e38653aacbac",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            },
+            "size": 595
+        }
+    ],
+    "mediaType": "application/vnd.docker.distribution.manifest.list.v2+json",
+    "schemaVersion": 2
+}

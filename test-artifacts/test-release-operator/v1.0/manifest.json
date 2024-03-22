@@ -1,0 +1,31 @@
+{
+   "tag": "4.14.6-x86_64",
+   "name": "openshift-release-dev/ocp-release",
+   "architecture": "amd64",
+   "schemaVersion": 1,
+   "history": [
+      {
+         "v1Compatibility": "{\"id\": \"0f1573d7d5424a454ce2c4b56be3bb1f71673a763559c271cc8a8b4d9042c09b\", \"created\": \"2023-12-07T10:07:46Z\", \"container_config\": {}, \"config\": {\"Env\": [\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\", \"container=oci\", \"GODEBUG=x509ignoreCN=0,madvdontneed=1\", \"__doozer=merge\", \"BUILD_RELEASE=202311211133.p0.g2a48f5e.assembly.stream\", \"BUILD_VERSION=v4.14.0\", \"OS_GIT_MAJOR=4\", \"OS_GIT_MINOR=14\", \"OS_GIT_PATCH=0\", \"OS_GIT_TREE_STATE=clean\", \"OS_GIT_VERSION=4.14.0-202311211133.p0.g2a48f5e.assembly.stream-2a48f5e\", \"SOURCE_GIT_TREE_STATE=clean\", \"__doozer_group=openshift-4.14\", \"__doozer_key=cluster-version-operator\", \"OS_GIT_COMMIT=2a48f5e\", \"SOURCE_DATE_EPOCH=1698762022\", \"SOURCE_GIT_COMMIT=2a48f5e228f27a26383f1a613fa328c1ffba7977\", \"SOURCE_GIT_TAG=v1.0.0-1084-g2a48f5e2\", \"SOURCE_GIT_URL=https://github.com/openshift/cluster-version-operator\"], \"Entrypoint\": [\"/usr/bin/cluster-version-operator\"], \"Labels\": {\"io.openshift.release\": \"4.14.6\", \"io.openshift.release.base-image-digest\": \"sha256:1aa41d9fc1da8a38c8a1666cbd2b2d4c7b1b34076a2f5bbab1aed49af7826f9c\"}}, \"architecture\": \"amd64\", \"size\": 184057000, \"os\": \"linux\", \"parent\": \"6fab5583ed8425a788f0926b3cfa63aecdbf74d3f77491669edc388e706567f7\", \"Size\": 1025188}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"6fab5583ed8425a788f0926b3cfa63aecdbf74d3f77491669edc388e706567f7\", \"parent\": \"024c8837398ed3cfc459c472ca09adb5d084d3061a117f26d934338fd42047e1\", \"created\": \"2023-12-07T10:07:46Z\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 27897813}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"024c8837398ed3cfc459c472ca09adb5d084d3061a117f26d934338fd42047e1\", \"parent\": \"e89fb14f5d263c9bb2e2cac7e5cacf2feb2c9f327a143fa6e118fff24fcd146a\", \"created\": \"2023-12-07T10:07:46Z\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 11589581}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"e89fb14f5d263c9bb2e2cac7e5cacf2feb2c9f327a143fa6e118fff24fcd146a\", \"parent\": \"732f740d865760b41beca4f4402a7790e1462b7af4bcefddcc1ade6668f5dc1c\", \"created\": \"2023-12-07T10:07:46Z\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 64018341}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"732f740d865760b41beca4f4402a7790e1462b7af4bcefddcc1ade6668f5dc1c\", \"parent\": \"92b2b5b1c7a33d0e7c09d93eabf2eb5e8ec3b7b9858dc1df337f70a3f73c501d\", \"created\": \"2023-12-07T10:07:46Z\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 1438}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"92b2b5b1c7a33d0e7c09d93eabf2eb5e8ec3b7b9858dc1df337f70a3f73c501d\", \"created\": \"2023-12-07T10:07:46Z\", \"comment\": \"Release image for OpenShift\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 79524639}"
+      }
+   ],
+   "fsLayers": [
+      {
+         "blobSum": "sha256:ac202bb709d9c0744e8fd6f3ed3c5c57eec4c7b16caeadac7b4b323f94f5809e"
+      }
+   ]
+}

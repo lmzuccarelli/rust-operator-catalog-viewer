@@ -99,9 +99,13 @@ pub async fn get_auth_json(
 /// process all relative functions in this module to actaully get the token
 pub async fn get_token(log: &Logging, name: String) -> String {
     // get creds from $XDG_RUNTIME_DIR
-    let creds = get_credentials(log).unwrap();
+    let creds = get_credentials(log);
+    if creds.is_err() {
+        log.error(&format!("credentials {:#?}", creds.err().unwrap()));
+        return "".to_string();
+    }
     // parse the json data
-    let rhauth = parse_json_creds(&log, creds, name.clone()).unwrap();
+    let rhauth = parse_json_creds(&log, creds.unwrap(), name.clone()).unwrap();
     // decode to base64
     let bytes = general_purpose::STANDARD.decode(rhauth).unwrap();
 
@@ -119,7 +123,7 @@ pub async fn get_token(log: &Logging, name: String) -> String {
         },
         &_ => {
             // used for testing
-            // calls the mockito server
+            // return for the mockito server
             let mut hld = name.split("/");
             let url = hld.nth(0).unwrap();
             String::from("http://".to_string() + url + "/auth")

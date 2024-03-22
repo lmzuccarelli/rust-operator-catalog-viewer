@@ -120,7 +120,7 @@ mod tests {
     }
 
     #[test]
-    fn mirror_to_disk_pass() {
+    fn get_operator_catalog_pass() {
         let log = &Logging {
             log_level: Level::DEBUG,
         };

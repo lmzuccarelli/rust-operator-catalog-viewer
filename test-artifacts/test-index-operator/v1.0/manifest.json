@@ -1,0 +1,223 @@
+{
+   "tag": "v4.13",
+   "name": "redhat/redhat----redhat-operator-index",
+   "architecture": "amd64",
+   "schemaVersion": 1,
+   "history": [
+      {
+         "v1Compatibility": "{\"created\": \"2023-10-05T21:50:32.773730304Z\", \"container\": \"b389d2654b1d941e4e994dba16727543b8a18d1e24a68d6c1047e47bedaed8f3\", \"container_config\": {\"Hostname\": \"1a10fc5c5988\", \"Domainname\": \"\", \"User\": \"1001\", \"AttachStdin\": false, \"AttachStdout\": false, \"AttachStderr\": false, \"ExposedPorts\": {\"50051/tcp\": {}}, \"Tty\": false, \"OpenStdin\": false, \"StdinOnce\": false, \"Env\": [\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\", \"container=oci\", \"GODEBUG=x509ignoreCN=0,madvdontneed=1\", \"__doozer=merge\", \"BUILD_RELEASE=202309181427.p0.g9957ffd.assembly.stream\", \"BUILD_VERSION=v4.13.0\", \"OS_GIT_MAJOR=4\", \"OS_GIT_MINOR=13\", \"OS_GIT_PATCH=0\", \"OS_GIT_TREE_STATE=clean\", \"OS_GIT_VERSION=4.13.0-202309181427.p0.g9957ffd.assembly.stream-9957ffd\", \"SOURCE_GIT_TREE_STATE=clean\", \"__doozer_group=openshift-4.13\", \"__doozer_key=operator-registry\", \"OS_GIT_COMMIT=9957ffd\", \"SOURCE_DATE_EPOCH=1693842497\", \"SOURCE_GIT_COMMIT=9957ffd6be55ffadf08c107191fa459e03af5f26\", \"SOURCE_GIT_TAG=9957ffd6b\", \"SOURCE_GIT_URL=https://github.com/openshift/operator-framework-olm\"], \"Cmd\": [\"serve\", \"/configs\", \"--cache-dir=/tmp/cache\"], \"Image\": \"\", \"Volumes\": {}, \"WorkingDir\": \"/registry\", \"Entrypoint\": [\"/bin/opm\"], \"OnBuild\": [], \"Labels\": {\"License\": \"GPLv2+\", \"architecture\": \"x86_64\", \"build-date\": \"2023-09-18T22:42:59\", \"com.redhat.build-host\": \"cpt-1001.osbs.prod.upshift.rdu2.redhat.com\", \"com.redhat.component\": \"operator-registry-container\", \"com.redhat.index.delivery.distribution_scope\": \"prod\", \"com.redhat.index.delivery.version\": \"v4.13\", \"com.redhat.license_terms\": \"https://www.redhat.com/agreements\", \"description\": \"This is a component of OpenShift Operator Lifecycle Manager and is the base for operator catalog API containers.\", \"distribution-scope\": \"public\", \"io.buildah.version\": \"1.29.1\", \"io.k8s.description\": \"This is a component of OpenShift Operator Lifecycle Manager and is the base for operator catalog API containers.\", \"io.k8s.display-name\": \"OpenShift Operator Registry\", \"io.openshift.build.commit.id\": \"9957ffd6be55ffadf08c107191fa459e03af5f26\", \"io.openshift.build.commit.url\": \"https://github.com/openshift/operator-framework-olm/commit/9957ffd6be55ffadf08c107191fa459e03af5f26\", \"io.openshift.build.source-location\": \"https://github.com/openshift/operator-framework-olm\", \"io.openshift.expose-services\": \"\", \"io.openshift.maintainer.component\": \"OLM / Registry\", \"io.openshift.maintainer.project\": \"OCPBUGS\", \"io.openshift.tags\": \"openshift,base\", \"maintainer\": \"Odin Team <aos-odin@redhat.com>\", \"name\": \"openshift/ose-operator-registry\", \"operators.operatorframework.io.index.configs.v1\": \"/configs\", \"release\": \"202309181427.p0.g9957ffd.assembly.stream\", \"summary\": \"Operator Registry runs in a Kubernetes or OpenShift cluster to provide operator catalog data to Operator Lifecycle Manager.\", \"url\": \"https://access.redhat.com/containers/#/registry.access.redhat.com/openshift/ose-operator-registry/images/v4.13.0-202309181427.p0.g9957ffd.assembly.stream\", \"vcs-ref\": \"c90641705d0874665ab72590a4e4a94788e4938a\", \"vcs-type\": \"git\", \"vendor\": \"Red Hat, Inc.\", \"version\": \"v4.13.0\"}}, \"config\": {\"Hostname\": \"1a10fc5c5988\", \"Domainname\": \"\", \"User\": \"1001\", \"AttachStdin\": false, \"AttachStdout\": false, \"AttachStderr\": false, \"ExposedPorts\": {\"50051/tcp\": {}}, \"Tty\": false, \"OpenStdin\": false, \"StdinOnce\": false, \"Env\": [\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\", \"container=oci\", \"GODEBUG=x509ignoreCN=0,madvdontneed=1\", \"__doozer=merge\", \"BUILD_RELEASE=202309181427.p0.g9957ffd.assembly.stream\", \"BUILD_VERSION=v4.13.0\", \"OS_GIT_MAJOR=4\", \"OS_GIT_MINOR=13\", \"OS_GIT_PATCH=0\", \"OS_GIT_TREE_STATE=clean\", \"OS_GIT_VERSION=4.13.0-202309181427.p0.g9957ffd.assembly.stream-9957ffd\", \"SOURCE_GIT_TREE_STATE=clean\", \"__doozer_group=openshift-4.13\", \"__doozer_key=operator-registry\", \"OS_GIT_COMMIT=9957ffd\", \"SOURCE_DATE_EPOCH=1693842497\", \"SOURCE_GIT_COMMIT=9957ffd6be55ffadf08c107191fa459e03af5f26\", \"SOURCE_GIT_TAG=9957ffd6b\", \"SOURCE_GIT_URL=https://github.com/openshift/operator-framework-olm\"], \"Cmd\": [\"serve\", \"/configs\", \"--cache-dir=/tmp/cache\"], \"Image\": \"\", \"Volumes\": {}, \"WorkingDir\": \"/registry\", \"Entrypoint\": [\"/bin/opm\"], \"OnBuild\": [], \"Labels\": {\"License\": \"GPLv2+\", \"architecture\": \"x86_64\", \"build-date\": \"2023-09-18T22:42:59\", \"com.redhat.build-host\": \"cpt-1001.osbs.prod.upshift.rdu2.redhat.com\", \"com.redhat.component\": \"operator-registry-container\", \"com.redhat.index.delivery.distribution_scope\": \"prod\", \"com.redhat.index.delivery.version\": \"v4.13\", \"com.redhat.license_terms\": \"https://www.redhat.com/agreements\", \"description\": \"This is a component of OpenShift Operator Lifecycle Manager and is the base for operator catalog API containers.\", \"distribution-scope\": \"public\", \"io.buildah.version\": \"1.29.1\", \"io.k8s.description\": \"This is a component of OpenShift Operator Lifecycle Manager and is the base for operator catalog API containers.\", \"io.k8s.display-name\": \"OpenShift Operator Registry\", \"io.openshift.build.commit.id\": \"9957ffd6be55ffadf08c107191fa459e03af5f26\", \"io.openshift.build.commit.url\": \"https://github.com/openshift/operator-framework-olm/commit/9957ffd6be55ffadf08c107191fa459e03af5f26\", \"io.openshift.build.source-location\": \"https://github.com/openshift/operator-framework-olm\", \"io.openshift.expose-services\": \"\", \"io.openshift.maintainer.component\": \"OLM / Registry\", \"io.openshift.maintainer.project\": \"OCPBUGS\", \"io.openshift.tags\": \"openshift,base\", \"maintainer\": \"Odin Team <aos-odin@redhat.com>\", \"name\": \"openshift/ose-operator-registry\", \"operators.operatorframework.io.index.configs.v1\": \"/configs\", \"release\": \"202309181427.p0.g9957ffd.assembly.stream\", \"summary\": \"Operator Registry runs in a Kubernetes or OpenShift cluster to provide operator catalog data to Operator Lifecycle Manager.\", \"url\": \"https://access.redhat.com/containers/#/registry.access.redhat.com/openshift/ose-operator-registry/images/v4.13.0-202309181427.p0.g9957ffd.assembly.stream\", \"vcs-ref\": \"c90641705d0874665ab72590a4e4a94788e4938a\", \"vcs-type\": \"git\", \"vendor\": \"Red Hat, Inc.\", \"version\": \"v4.13.0\"}}, \"architecture\": \"amd64\", \"os\": \"linux\", \"parent\": \"037788968d9e50673dadddd722afeeac11d88f9f13ae50ef4e01d85ff48718c2\", \"id\": \"29cbe735d8e14b407f940be94c8c62173baa1e54a8571588eb90d8e4f7f36afc\", \"comment\": \"FROM registry.redhat.io/openshift4/ose-operator-registry@sha256:1655835efa277eae50245e595c423e57bb995eb5331f28fa88a9e4659079ea2b\", \"Size\": 180343094}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"037788968d9e50673dadddd722afeeac11d88f9f13ae50ef4e01d85ff48718c2\", \"parent\": \"d3abc3140cf428f535a88acc2daa86092ee00f6a5ec58d49e468a6855c5dd868\", \"created\": \"2023-10-05T21:50:32.743059344Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL com.redhat.index.delivery.version=\\\"v4.13\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"d3abc3140cf428f535a88acc2daa86092ee00f6a5ec58d49e468a6855c5dd868\", \"parent\": \"7d41dc1c921dffd3fd89ad2a70a245314c188c990617b241540f733723a9fc35\", \"created\": \"2023-10-05T21:50:32.712566553Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:6625f1993af56acf3db97b9f27318bc7dda3e5d4969d1dca4b2e437005390cbc in /var/lib/iib/_hidden/do.not.edit.db \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"7d41dc1c921dffd3fd89ad2a70a245314c188c990617b241540f733723a9fc35\", \"parent\": \"9e29b9c2e9255f72150aa6ba376d3f7f8961f0542669885cbeb1496453ae2428\", \"created\": \"2023-10-05T21:50:31.262356003Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL operators.operatorframework.io.index.configs.v1=/configs\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"9e29b9c2e9255f72150aa6ba376d3f7f8961f0542669885cbeb1496453ae2428\", \"parent\": \"e03de733719cef7e43890dae22ce088c007082d01f1064ffdf98b05cd6d25dfc\", \"created\": \"2023-10-05T21:50:31.232985317Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) COPY dir:5b915f9b5468ef670b4709bc1d3cf9ad69d8f2a106263219eb570ef7aabdfb5a in /tmp/cache \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"e03de733719cef7e43890dae22ce088c007082d01f1064ffdf98b05cd6d25dfc\", \"parent\": \"b1c229bd20feb8bf412bab9509136d97598354da0ee34db8bd9615a7724c9410\", \"created\": \"2023-10-05T21:50:28.631180256Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD dir:771d87a155d908fa2c9208e7bce3f030d20fa40fb2f302fcc52796ec03a6106e in /configs \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"b1c229bd20feb8bf412bab9509136d97598354da0ee34db8bd9615a7724c9410\", \"parent\": \"038f7251ab0fb6d7c769ccecfcf332a79c5a565d7c02c01ccb2bf9d76f7ff9f9\", \"created\": \"2023-10-05T21:50:27.136220866Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) CMD [\\\"serve\\\", \\\"/configs\\\", \\\"--cache-dir=/tmp/cache\\\"]\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"038f7251ab0fb6d7c769ccecfcf332a79c5a565d7c02c01ccb2bf9d76f7ff9f9\", \"parent\": \"b78f4ccccf430d28a44176bfab242aaf94a82c3837dd01c04ce1ce3d3c513674\", \"created\": \"2023-10-05T21:50:27.104695224Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENTRYPOINT [\\\"/bin/opm\\\"]\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"b78f4ccccf430d28a44176bfab242aaf94a82c3837dd01c04ce1ce3d3c513674\", \"parent\": \"33656fbde0bd4485b0c03a55afd9b4d72ce32fb64d5ece9d3367a7043b0cf1cd\", \"created\": \"2023-09-18T22:55:51.014235462Z\", \"comment\": \"FROM registry-proxy.engineering.redhat.com/rh-osbs/openshift-ose-base@sha256:20bfb48d4708ba2548d430dff0ab426b0b5b1c885c91a9fb205deae84133e729\", \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) USER 1001\"]}, \"Size\": 168792253}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"33656fbde0bd4485b0c03a55afd9b4d72ce32fb64d5ece9d3367a7043b0cf1cd\", \"parent\": \"8bc89dda42f78c5d87ae640fff403313b9bfe48afe2845e0a270d379582d9205\", \"created\": \"2023-09-18T22:55:48.840390722Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.repos.d/ubi.repo || :\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"8bc89dda42f78c5d87ae640fff403313b9bfe48afe2845e0a270d379582d9205\", \"parent\": \"c12264a111bbe1bbca251ea25ff4c1a62bd5aca3fa07ca8e3652e930bd8c3665\", \"created\": \"2023-09-18T22:55:47.998352824Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) USER root\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"c12264a111bbe1bbca251ea25ff4c1a62bd5aca3fa07ca8e3652e930bd8c3665\", \"parent\": \"32cea8c47a11d29d3f7a9e0457408bc50ce374e24ccad971bbfd3d92ab867dd2\", \"created\": \"2023-09-18T22:55:47.766623621Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) USER 1001\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"32cea8c47a11d29d3f7a9e0457408bc50ce374e24ccad971bbfd3d92ab867dd2\", \"parent\": \"e867e94f94a57568da3bb96020d5759afe8b23b8a79579f0f5975af9d2ab6009\", \"created\": \"2023-09-18T22:55:47.70618377Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c rm -f /tmp/tls-ca-bundle.pem\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"e867e94f94a57568da3bb96020d5759afe8b23b8a79579f0f5975af9d2ab6009\", \"parent\": \"2f6f2ee7e1bde32f9d10b6b829d54002756f16aaca0e7df4cf843ff23312e414\", \"created\": \"2023-09-18T22:55:46.78757794Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c rm -f '/etc/yum.repos.d/signed-b1c46.repo'\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"2f6f2ee7e1bde32f9d10b6b829d54002756f16aaca0e7df4cf843ff23312e414\", \"parent\": \"14442f37e02fee0aa03bfce5b17f0633d63e2f19a86b0693286a264111aabe32\", \"created\": \"2023-09-18T22:55:45.878742737Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) USER root\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"14442f37e02fee0aa03bfce5b17f0633d63e2f19a86b0693286a264111aabe32\", \"parent\": \"ccc3faf89ebfc538dec5d240320f17be33eb6c2af92e9b33f97b6184629d7ada\", \"created\": \"2023-09-18T22:55:45.655922216Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL \\\"com.redhat.license_terms\\\"=\\\"https://www.redhat.com/agreements\\\" \\\"distribution-scope\\\"=\\\"public\\\" \\\"vendor\\\"=\\\"Red Hat, Inc.\\\" \\\"build-date\\\"=\\\"2023-09-18T22:42:59\\\" \\\"architecture\\\"=\\\"x86_64\\\" \\\"vcs-type\\\"=\\\"git\\\" \\\"vcs-ref\\\"=\\\"c90641705d0874665ab72590a4e4a94788e4938a\\\" \\\"description\\\"=\\\"This is a component of OpenShift Operator Lifecycle Manager and is the base for operator catalog API containers.\\\" \\\"url\\\"=\\\"https://access.redhat.com/containers/#/registry.access.redhat.com/openshift/ose-operator-registry/images/v4.13.0-202309181427.p0.g9957ffd.assembly.stream\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"ccc3faf89ebfc538dec5d240320f17be33eb6c2af92e9b33f97b6184629d7ada\", \"parent\": \"59145848d225db396ea6007fdeb1bc8b8a9e5410a6cea9d5f889408c7617a68e\", \"created\": \"2023-09-18T22:55:45.589979389Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:f82a5d7fc2528bba12b054f388b7f225a8647cc14e812c08e29df261ebc6f7b0 in /root/buildinfo/Dockerfile-openshift-ose-operator-registry-v4.13.0-202309181427.p0.g9957ffd.assembly.stream \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"59145848d225db396ea6007fdeb1bc8b8a9e5410a6cea9d5f889408c7617a68e\", \"parent\": \"1d679665f7194ae70b3011c67b2dd9b0b60bce627865b8b897aabddc98480b71\", \"created\": \"2023-09-18T22:55:45.271512214Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:262a9bdb20e0c91805a9e0bb0e8acd6f15760348e9b89f28b1aacaf6f8cea34e in /root/buildinfo/content_manifests/operator-registry-container-v4.13.0-202309181427.p0.g9957ffd.assembly.stream.json \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"1d679665f7194ae70b3011c67b2dd9b0b60bce627865b8b897aabddc98480b71\", \"parent\": \"b2e4ed636e2715ef508f4fc66527fcbefdcffa337d3240d824db281c9755a390\", \"created\": \"2023-09-18T22:55:44.94770006Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL         io.k8s.display-name=\\\"OpenShift Operator Registry\\\"         io.k8s.description=\\\"This is a component of OpenShift Operator Lifecycle Manager and is the base for operator catalog API containers.\\\"         maintainer=\\\"Odin Team <aos-odin@redhat.com>\\\"         summary=\\\"Operator Registry runs in a Kubernetes or OpenShift cluster to provide operator catalog data to Operator Lifecycle Manager.\\\"         name=\\\"openshift/ose-operator-registry\\\"         com.redhat.component=\\\"operator-registry-container\\\"         io.openshift.maintainer.project=\\\"OCPBUGS\\\"         io.openshift.maintainer.component=\\\"OLM / Registry\\\"         release=\\\"202309181427.p0.g9957ffd.assembly.stream\\\"         io.openshift.build.commit.id=\\\"9957ffd6be55ffadf08c107191fa459e03af5f26\\\"         io.openshift.build.source-location=\\\"https://github.com/openshift/operator-framework-olm\\\"         io.openshift.build.commit.url=\\\"https://github.com/openshift/operator-framework-olm/commit/9957ffd6be55ffadf08c107191fa459e03af5f26\\\"         version=\\\"v4.13.0\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"b2e4ed636e2715ef508f4fc66527fcbefdcffa337d3240d824db281c9755a390\", \"parent\": \"86a98a84282e1aaebab459b6a16e7f0c387428c01623dde22195769c34a74865\", \"created\": \"2023-09-18T22:55:44.892279291Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) CMD [\\\"--database\\\", \\\"/bundles.db\\\"]\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"86a98a84282e1aaebab459b6a16e7f0c387428c01623dde22195769c34a74865\", \"parent\": \"f9f4c3865b64fd3427e5b9ab7fe30c4f950d33013ebad453365a2d2c0459fb6b\", \"created\": \"2023-09-18T22:55:44.831163872Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENTRYPOINT [\\\"/bin/registry-server\\\"]\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"f9f4c3865b64fd3427e5b9ab7fe30c4f950d33013ebad453365a2d2c0459fb6b\", \"parent\": \"e6fd2518ddf35cee583dcde6f4a1aa7ed1edcbee4042066067dffbb3d2b7751b\", \"created\": \"2023-09-18T22:55:44.774345021Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) EXPOSE 50051\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"e6fd2518ddf35cee583dcde6f4a1aa7ed1edcbee4042066067dffbb3d2b7751b\", \"parent\": \"75d525d1e27c7d15714e697890ed809e5b3587358a4b21cc0b961a066d7dae9f\", \"created\": \"2023-09-18T22:55:44.7196493Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) USER 1001\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"75d525d1e27c7d15714e697890ed809e5b3587358a4b21cc0b961a066d7dae9f\", \"parent\": \"5c74b2a86e15994931c6edf8afdefbe9030b56b232954a09ecc8c6eb8ae0cbaa\", \"created\": \"2023-09-18T22:55:44.634351784Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) WORKDIR /registry\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"5c74b2a86e15994931c6edf8afdefbe9030b56b232954a09ecc8c6eb8ae0cbaa\", \"parent\": \"95b51be661f5602b4368afde692253eb29c7607b961b8b9acaf26fee82a158ae\", \"created\": \"2023-09-18T22:55:44.570796329Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c chgrp -R 0 /registry &&     chmod -R g+rwx /registry\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"95b51be661f5602b4368afde692253eb29c7607b961b8b9acaf26fee82a158ae\", \"parent\": \"ce13e13c1e538d7a186a416ad095e84552e84165c1063855131564c694464a5d\", \"created\": \"2023-09-18T22:55:43.907845576Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mkdir /registry\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"ce13e13c1e538d7a186a416ad095e84552e84165c1063855131564c694464a5d\", \"parent\": \"86cdc076501ad7c21acfd632238daaf5b2885f7fe966b2b1db0c864369bbd7a9\", \"created\": \"2023-09-18T22:55:43.26358897Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c ln -s /bin/registry/* /bin\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"86cdc076501ad7c21acfd632238daaf5b2885f7fe966b2b1db0c864369bbd7a9\", \"parent\": \"6a215d91c245e95c6e4b41015f79a9ed73c9e68b723c5670ceee1f05ecb80eb6\", \"created\": \"2023-09-18T22:55:42.549466142Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) COPY file:3bfa145e5d92bf8b687155c9b6bbb74a4bcc281759f5f5ef790af47e7df71478 in /bin/grpc_health_probe \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"6a215d91c245e95c6e4b41015f79a9ed73c9e68b723c5670ceee1f05ecb80eb6\", \"parent\": \"37a57c7a3d24a129b6feb599190bb8036f54d89b597dcfe3878e8eb347b0e591\", \"created\": \"2023-09-18T22:55:42.228930955Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) COPY multi:ca0fa0a0e8323aaf125c97353c4723aee9e32458a31e7bb6e096f3663f2f6ad1 in /bin/registry/ \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"37a57c7a3d24a129b6feb599190bb8036f54d89b597dcfe3878e8eb347b0e591\", \"parent\": \"288dfd235101be9d75ca49e13ad61735a5569171c24e8ad64ecb28f84ba519e3\", \"created\": \"2023-09-18T22:55:39.683641754Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV __doozer=merge OS_GIT_COMMIT=9957ffd OS_GIT_VERSION=4.13.0-202309181427.p0.g9957ffd.assembly.stream-9957ffd SOURCE_DATE_EPOCH=1693842497 SOURCE_GIT_COMMIT=9957ffd6be55ffadf08c107191fa459e03af5f26 SOURCE_GIT_TAG=9957ffd6b SOURCE_GIT_URL=https://github.com/openshift/operator-framework-olm \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"288dfd235101be9d75ca49e13ad61735a5569171c24e8ad64ecb28f84ba519e3\", \"parent\": \"c792212fa7d14568dca2e950fb352255398882fdd2937e5715bc5796fa1055a6\", \"created\": \"2023-09-18T22:55:39.683420349Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV __doozer=update BUILD_RELEASE=202309181427.p0.g9957ffd.assembly.stream BUILD_VERSION=v4.13.0 OS_GIT_MAJOR=4 OS_GIT_MINOR=13 OS_GIT_PATCH=0 OS_GIT_TREE_STATE=clean OS_GIT_VERSION=4.13.0-202309181427.p0.g9957ffd.assembly.stream SOURCE_GIT_TREE_STATE=clean __doozer_group=openshift-4.13 __doozer_key=operator-registry \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"c792212fa7d14568dca2e950fb352255398882fdd2937e5715bc5796fa1055a6\", \"parent\": \"5822aa298cd05839a9ea3b3720bce13dc9555daddcc2e7374a8afe94849a74e8\", \"created\": \"2023-09-18T22:55:39.68309754Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:a21356d335bcf0371efe5b0899a026ccdd11043ee9f71d1dc919f15d36ce174f in /etc/yum.repos.d/ \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"5822aa298cd05839a9ea3b3720bce13dc9555daddcc2e7374a8afe94849a74e8\", \"parent\": \"30ae6a1b638efb3e755385949b9a8412d579ac47723479747987394d023b9a06\", \"created\": \"2023-09-18T22:55:39.407262096Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:ecc29a1455ca1b7c82018555e16e2e802135974523df6748e431f8707e759ddd in /tmp/tls-ca-bundle.pem \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"30ae6a1b638efb3e755385949b9a8412d579ac47723479747987394d023b9a06\", \"parent\": \"2cb3458b6a2fa42ae7feb3d4bf7b793d674a5c3d555373f029bf9e70d869956b\", \"created\": \"2023-09-18T22:55:39.135747703Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mv -f /etc/yum.repos.d/ubi.repo /tmp || :\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"2cb3458b6a2fa42ae7feb3d4bf7b793d674a5c3d555373f029bf9e70d869956b\", \"parent\": \"f02021d13b5a846dc634b428ade704308dc6b8c32f984d70c203bdd7ac356a31\", \"created\": \"2023-09-18T22:55:38.470940156Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ARG REMOTE_SOURCES REMOTE_SOURCES_DIR\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"f02021d13b5a846dc634b428ade704308dc6b8c32f984d70c203bdd7ac356a31\", \"parent\": \"d1de5e308f0ac0d9968ad30f8b15984a047cd9983c3063e7b2b89d48e769532c\", \"created\": \"2023-09-18T22:55:38.470798953Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ARG REMOTE_SOURCES\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"d1de5e308f0ac0d9968ad30f8b15984a047cd9983c3063e7b2b89d48e769532c\", \"parent\": \"f7081c7606a030eb75db2998dfb990da0767a7358dd841effc265503ad24a70e\", \"created\": \"2023-09-18T21:57:55.102903226Z\", \"comment\": \"FROM registry-proxy.engineering.redhat.com/rh-osbs/openshift-base-rhel8@sha256:7a6091745dc512b8b8064edb9765680ec9f3a40f0aa25bb5ed5e01c76f2a575c\", \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.repos.d/ubi.repo || :\"]}, \"Size\": 11220702}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"f7081c7606a030eb75db2998dfb990da0767a7358dd841effc265503ad24a70e\", \"parent\": \"682d3ebcfa3a74aecb3b4b512a59802768fbe09ae471c8487ce97d2ef13231d6\", \"created\": \"2023-09-18T21:57:54.15227085Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c rm -f /tmp/tls-ca-bundle.pem\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"682d3ebcfa3a74aecb3b4b512a59802768fbe09ae471c8487ce97d2ef13231d6\", \"parent\": \"a78a6bcb37f1bb88e7afabad39dbd533dab5dd30c18fe0379277319ea2fe2b99\", \"created\": \"2023-09-18T21:57:53.458239547Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c rm -f '/etc/yum.repos.d/signed-ea1d9.repo'\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"a78a6bcb37f1bb88e7afabad39dbd533dab5dd30c18fe0379277319ea2fe2b99\", \"parent\": \"9213f3b4b5c04172bcaa64f0773929bcef2372e157b427413fda45e01f7bb872\", \"created\": \"2023-09-18T21:57:52.788512404Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL \\\"com.redhat.license_terms\\\"=\\\"https://www.redhat.com/agreements\\\" \\\"distribution-scope\\\"=\\\"public\\\" \\\"vendor\\\"=\\\"Red Hat, Inc.\\\" \\\"build-date\\\"=\\\"2023-09-18T21:53:56\\\" \\\"architecture\\\"=\\\"x86_64\\\" \\\"vcs-type\\\"=\\\"git\\\" \\\"vcs-ref\\\"=\\\"c21fcee56dcc94f326f770b353531b06b372b397\\\" \\\"description\\\"=\\\"This is the base image from which all OpenShift Container Platform images inherit.\\\" \\\"url\\\"=\\\"https://access.redhat.com/containers/#/registry.access.redhat.com/openshift/ose-base/images/v4.13.0-202309181427.p0.g0465934.assembly.stream\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"9213f3b4b5c04172bcaa64f0773929bcef2372e157b427413fda45e01f7bb872\", \"parent\": \"a5a37b058e79ef69d2e73f00eee8fdda3132207e4ba615530d6fbd2038cfd13f\", \"created\": \"2023-09-18T21:57:52.788334535Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:0f08c0fe79c9ea6fccf21c611b0e42094cd1fb5f6dfe1011a4f768f1e40317f7 in /root/buildinfo/Dockerfile-openshift-ose-base-v4.13.0-202309181427.p0.g0465934.assembly.stream \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"a5a37b058e79ef69d2e73f00eee8fdda3132207e4ba615530d6fbd2038cfd13f\", \"parent\": \"c4b9adb650e4a6c6d1eb6af88fa6f88a60ecfeec9615675dd6d23219e435705e\", \"created\": \"2023-09-18T21:57:52.540402837Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:695a2c3c3e82f91a80801c93a84ee57d660aa105ad5c1a437b2f7710b01ea360 in /root/buildinfo/content_manifests/openshift-enterprise-base-container-v4.13.0-202309181427.p0.g0465934.assembly.stream.json \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"c4b9adb650e4a6c6d1eb6af88fa6f88a60ecfeec9615675dd6d23219e435705e\", \"parent\": \"27d2b5f538cb6d32283170b732f268c511f9b980166ee5e0625224013175db5b\", \"created\": \"2023-09-18T21:57:52.249328152Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL         io.k8s.display-name=\\\"OpenShift Container Platform RHEL 8 Base\\\"         io.k8s.description=\\\"This is the base image from which all OpenShift Container Platform images inherit.\\\"         License=\\\"GPLv2+\\\"         io.openshift.tags=\\\"openshift,base\\\"         vendor=\\\"Red Hat\\\"         name=\\\"openshift/ose-base\\\"         com.redhat.component=\\\"openshift-enterprise-base-container\\\"         io.openshift.maintainer.project=\\\"OCPBUGS\\\"         io.openshift.maintainer.component=\\\"Release\\\"         release=\\\"202309181427.p0.g0465934.assembly.stream\\\"         io.openshift.build.commit.id=\\\"04659348dbad0cd9b56596d5977d2934fa01d509\\\"         io.openshift.build.source-location=\\\"https://github.com/openshift/images\\\"         io.openshift.build.commit.url=\\\"https://github.com/openshift/images/commit/04659348dbad0cd9b56596d5977d2934fa01d509\\\"         version=\\\"v4.13.0\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"27d2b5f538cb6d32283170b732f268c511f9b980166ee5e0625224013175db5b\", \"parent\": \"89895cd5be1f81694a69588aa2aa76db39ff6722d6bd889337ab52c076077fc7\", \"created\": \"2023-09-18T21:57:52.249066806Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV GODEBUG=x509ignoreCN=0,madvdontneed=1\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"89895cd5be1f81694a69588aa2aa76db39ff6722d6bd889337ab52c076077fc7\", \"parent\": \"21e1adf6251143b406196ba830c5672de2f65aac8d5ac91343f792654145c918\", \"created\": \"2023-09-18T21:57:52.248935213Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c INSTALL_PKGS=\\\"       which tar wget hostname shadow-utils       socat findutils lsof bind-utils gzip       procps-ng rsync iproute diffutils python3       \\\" &&     if [ ! -e /usr/bin/yum ]; then ln -s /usr/bin/microdnf /usr/bin/yum; fi &&     echo 'skip_missing_names_on_install=0' >> /etc/yum.conf &&     yum install -y --setopt=tsflags=nodocs --setopt=install_weak_deps=False ${INSTALL_PKGS} &&     ( test -e /usr/bin/python ||  alternatives --set python /usr/bin/python3 ) &&     yum clean all && rm -rf /var/cache/*\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"21e1adf6251143b406196ba830c5672de2f65aac8d5ac91343f792654145c918\", \"parent\": \"ab4a0209da8e056c939e94985ffb85976cc96b2f052bfd0a0a63ca47a9248618\", \"created\": \"2023-09-18T21:55:47.773963003Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV __doozer=merge OS_GIT_COMMIT=0465934 OS_GIT_VERSION=4.13.0-202309181427.p0.g0465934.assembly.stream-0465934 SOURCE_DATE_EPOCH=1679548783 SOURCE_GIT_COMMIT=04659348dbad0cd9b56596d5977d2934fa01d509 SOURCE_GIT_TAG=0465934 SOURCE_GIT_URL=https://github.com/openshift/images \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"ab4a0209da8e056c939e94985ffb85976cc96b2f052bfd0a0a63ca47a9248618\", \"parent\": \"670c43728010e0c89eeb59c52f6941be5502bf1d175c3b30e7ab15395ab585f4\", \"created\": \"2023-09-18T21:55:47.773739228Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV __doozer=update BUILD_RELEASE=202309181427.p0.g0465934.assembly.stream BUILD_VERSION=v4.13.0 OS_GIT_MAJOR=4 OS_GIT_MINOR=13 OS_GIT_PATCH=0 OS_GIT_TREE_STATE=clean OS_GIT_VERSION=4.13.0-202309181427.p0.g0465934.assembly.stream SOURCE_GIT_TREE_STATE=clean __doozer_group=openshift-4.13 __doozer_key=openshift-enterprise-base \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"670c43728010e0c89eeb59c52f6941be5502bf1d175c3b30e7ab15395ab585f4\", \"parent\": \"69ee3251bc05a0b9528d43daa00006b270929f326028b00ca2ea7f946dd94134\", \"created\": \"2023-09-18T21:55:47.77346161Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:542728a39552a214d854b8c76a15033b4fd786650e3c81ef4d0b26c671171394 in /etc/yum.repos.d/ \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"69ee3251bc05a0b9528d43daa00006b270929f326028b00ca2ea7f946dd94134\", \"parent\": \"f9818f6295bfa4993b87a901eac0f4c526f528a66d9642da950cf9ba054bcc49\", \"created\": \"2023-09-18T21:55:47.521741177Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:ecc29a1455ca1b7c82018555e16e2e802135974523df6748e431f8707e759ddd in /tmp/tls-ca-bundle.pem \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"f9818f6295bfa4993b87a901eac0f4c526f528a66d9642da950cf9ba054bcc49\", \"parent\": \"1219d7f5acd4e63998c3f6e07364fb363f7c9d30252f68658454e0ce4287c0e5\", \"created\": \"2023-09-18T21:55:47.275586347Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mv -f /etc/yum.repos.d/ubi.repo /tmp || :\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"1219d7f5acd4e63998c3f6e07364fb363f7c9d30252f68658454e0ce4287c0e5\", \"parent\": \"7295155f291651cd7f8965cd382b124851cc54e2c3e8c38b3280de02d4294927\", \"created\": \"2023-09-18T21:55:46.637059117Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ARG REMOTE_SOURCES REMOTE_SOURCES_DIR\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"7295155f291651cd7f8965cd382b124851cc54e2c3e8c38b3280de02d4294927\", \"parent\": \"a2fbf895ff0c783601d673acfc1a44aba2c92532869c8017fb0b5eb023f6833d\", \"created\": \"2023-09-18T21:55:46.636940042Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ARG REMOTE_SOURCES\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"a2fbf895ff0c783601d673acfc1a44aba2c92532869c8017fb0b5eb023f6833d\", \"parent\": \"65bedb5dc28075e545a5d4819379f9095011796e29417cd9ddce3c799b8fe2b2\", \"created\": \"2023-09-18T21:48:56.45147941Z\", \"comment\": \"FROM registry-proxy.engineering.redhat.com/rh-osbs/rhel-els@sha256:ae88d68c3ba828bfac144a6561f9300af68fc5d6f332785e10e845cc2a48b2a3\", \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.repos.d/ubi.repo || :\"]}, \"Size\": 45573605}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"65bedb5dc28075e545a5d4819379f9095011796e29417cd9ddce3c799b8fe2b2\", \"parent\": \"448a2fe2c6ddde8f560327643627c5ea1f7856916fb008d23ee036e5ec584b9a\", \"created\": \"2023-09-18T21:48:54.401706311Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c rm -f /tmp/tls-ca-bundle.pem\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"448a2fe2c6ddde8f560327643627c5ea1f7856916fb008d23ee036e5ec584b9a\", \"parent\": \"05e4b3f7b7e6db4f919890c67d708e5b82006cfbcdb7ab846c0450318bb89a5b\", \"created\": \"2023-09-18T21:48:53.725823125Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c rm -f '/etc/yum.repos.d/signed-82b35.repo'\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"05e4b3f7b7e6db4f919890c67d708e5b82006cfbcdb7ab846c0450318bb89a5b\", \"parent\": \"71e9b6be292d09ccde3aa7ded91b3ccab1372adb44768c51f32e6762b47523b1\", \"created\": \"2023-09-18T21:48:53.054983278Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL \\\"com.redhat.license_terms\\\"=\\\"https://www.redhat.com/agreements\\\" \\\"distribution-scope\\\"=\\\"public\\\" \\\"vendor\\\"=\\\"Red Hat, Inc.\\\" \\\"build-date\\\"=\\\"2023-09-18T21:45:17\\\" \\\"architecture\\\"=\\\"x86_64\\\" \\\"vcs-type\\\"=\\\"git\\\" \\\"vcs-ref\\\"=\\\"6a6df95f3c422712718a7a293c047066e39cdb4e\\\" \\\"url\\\"=\\\"https://access.redhat.com/containers/#/registry.access.redhat.com/openshift/base-rhel8/images/v4.13.0-202309181427.p0.gf020942.assembly.stream\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"71e9b6be292d09ccde3aa7ded91b3ccab1372adb44768c51f32e6762b47523b1\", \"parent\": \"644658b419f792cc959393e42dd2da3a9c20b77ac389a66f08b85484922f5228\", \"created\": \"2023-09-18T21:48:53.054839536Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:d0a0e51367d53c14a5cc118d75741b5a8cdb1f31d6d66e1bb2977810f3541a31 in /root/buildinfo/Dockerfile-openshift-base-rhel8-v4.13.0-202309181427.p0.gf020942.assembly.stream \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"644658b419f792cc959393e42dd2da3a9c20b77ac389a66f08b85484922f5228\", \"parent\": \"14e1abbbe35889a972f90f6c683c5b34579b822db6baf2a8512ac5db45780b62\", \"created\": \"2023-09-18T21:48:52.807458835Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:82d479e13879c5493a19ce65552501fb2e6723e827ca33274f516a9b1e25b2cd in /root/buildinfo/content_manifests/openshift-base-rhel8-container-v4.13.0-202309181427.p0.gf020942.assembly.stream.json \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"14e1abbbe35889a972f90f6c683c5b34579b822db6baf2a8512ac5db45780b62\", \"parent\": \"5526ea781fd5f08046b96f5229eb5efbd822110e1b314e0969393d8d40552ac1\", \"created\": \"2023-09-18T21:48:52.557648948Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) LABEL         name=\\\"openshift/base-rhel8\\\"         com.redhat.component=\\\"openshift-base-rhel8-container\\\"         io.openshift.maintainer.project=\\\"OCPBUGS\\\"         io.openshift.maintainer.component=\\\"Unknown\\\"         release=\\\"202309181427.p0.gf020942.assembly.stream\\\"         io.openshift.build.commit.id=\\\"f02094204c5dab97e4ccadd35d135a2ef12c341f\\\"         io.openshift.build.source-location=\\\"https://github.com/openshift/ocp-build-data\\\"         io.openshift.build.commit.url=\\\"https://github.com/openshift/ocp-build-data/commit/f02094204c5dab97e4ccadd35d135a2ef12c341f\\\"         version=\\\"v4.13.0\\\"\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"5526ea781fd5f08046b96f5229eb5efbd822110e1b314e0969393d8d40552ac1\", \"parent\": \"6bca8e3f69e31e33c2e33c604088f05cc66211975b9b3e42e8330274bdbc9a27\", \"created\": \"2023-09-18T21:48:52.557465197Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) COPY file:625cb223e009f10dfaf43a3d5c3b88654ed81936c84f8d0fd14da374b0c4f263 in /etc/yum.repos.d/ubi.repo \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"6bca8e3f69e31e33c2e33c604088f05cc66211975b9b3e42e8330274bdbc9a27\", \"parent\": \"4c05aebe640deffee9379ac28aea5191e31d7b81c43c298e00535f300f560ebf\", \"created\": \"2023-09-18T21:48:52.283723895Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c echo 'skip_missing_names_on_install=0' >> /etc/yum.conf  && yum update -y   && yum clean all\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"4c05aebe640deffee9379ac28aea5191e31d7b81c43c298e00535f300f560ebf\", \"parent\": \"629520928cab495ac36507e587e07a3126524308b20d5bcea889afdfcfd7299f\", \"created\": \"2023-09-18T21:46:48.450133244Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV __doozer=merge OS_GIT_COMMIT=f020942 OS_GIT_VERSION=4.13.0-202309181427.p0.gf020942.assembly.stream-f020942 SOURCE_DATE_EPOCH=1650510022 SOURCE_GIT_COMMIT=f02094204c5dab97e4ccadd35d135a2ef12c341f SOURCE_GIT_TAG=f0209420 SOURCE_GIT_URL=https://github.com/openshift/ocp-build-data \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"629520928cab495ac36507e587e07a3126524308b20d5bcea889afdfcfd7299f\", \"parent\": \"ffd0b8f5cb4e407d4ec8476505a4b62fd0e240722beb857d6a5de46bb6b4f2ec\", \"created\": \"2023-09-18T21:46:48.449836558Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ENV __doozer=update BUILD_RELEASE=202309181427.p0.gf020942.assembly.stream BUILD_VERSION=v4.13.0 OS_GIT_MAJOR=4 OS_GIT_MINOR=13 OS_GIT_PATCH=0 OS_GIT_TREE_STATE=clean OS_GIT_VERSION=4.13.0-202309181427.p0.gf020942.assembly.stream SOURCE_GIT_TREE_STATE=clean __doozer_group=openshift-4.13 __doozer_key=openshift-base-rhel8 \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"ffd0b8f5cb4e407d4ec8476505a4b62fd0e240722beb857d6a5de46bb6b4f2ec\", \"parent\": \"28322c0f71d03e31c83d310b9ed85eb551f043300c167f21e8b2f942bb50d9e5\", \"created\": \"2023-09-18T21:46:48.44960565Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:3d56e0fd74d91ccfa6f304ecaa64365d855dfa605e982388df2b0e9c96d5e85f in /etc/yum.repos.d/ \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"28322c0f71d03e31c83d310b9ed85eb551f043300c167f21e8b2f942bb50d9e5\", \"parent\": \"463030531875e100da8bedab595684fa0b38c4b72e0622d37bed1adadb1c0761\", \"created\": \"2023-09-18T21:46:48.119331585Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ADD file:ecc29a1455ca1b7c82018555e16e2e802135974523df6748e431f8707e759ddd in /tmp/tls-ca-bundle.pem \"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"463030531875e100da8bedab595684fa0b38c4b72e0622d37bed1adadb1c0761\", \"parent\": \"62ebb473220649b907b9a31a2651d07599ebb020aaf30114003b0a20827d11d4\", \"created\": \"2023-09-18T21:46:47.775718241Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"|2 REMOTE_SOURCES=unpacked_remote_sources REMOTE_SOURCES_DIR=/remote-source /bin/sh -c mv -f /etc/yum.repos.d/ubi.repo /tmp || :\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"62ebb473220649b907b9a31a2651d07599ebb020aaf30114003b0a20827d11d4\", \"parent\": \"832d14592681cdc68019fd53f29a92b27e01ba3208b5440ceb3cf4081cbdbcf4\", \"created\": \"2023-09-18T21:46:46.983697969Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ARG REMOTE_SOURCES REMOTE_SOURCES_DIR\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"832d14592681cdc68019fd53f29a92b27e01ba3208b5440ceb3cf4081cbdbcf4\", \"parent\": \"e4d697bead6d845c9b5f05642e023e7313411e797a97be02cb85b84f904e6eba\", \"created\": \"2023-09-18T21:46:46.983585095Z\", \"throwaway\": true, \"container_config\": {\"Cmd\": [\"/bin/sh -c #(nop) ARG REMOTE_SOURCES\"]}, \"Size\": 32}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"e4d697bead6d845c9b5f05642e023e7313411e797a97be02cb85b84f904e6eba\", \"parent\": \"f8cd12a06bf993e9d617531b1fc3bb01a4237194cded4d1f38e8238698d3e5fa\", \"created\": \"2022-09-06T17:31:37.462967Z\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 1483}"
+      },
+      {
+         "v1Compatibility": "{\"id\": \"f8cd12a06bf993e9d617531b1fc3bb01a4237194cded4d1f38e8238698d3e5fa\", \"created\": \"2022-09-06T17:31:25.030847584Z\", \"comment\": \"Imported from -\", \"container_config\": {\"Cmd\": [null]}, \"Size\": 83590398}"
+      }
+   ],
+   "fsLayers": [
+      {
+         "blobSum": "sha256:b4385e5fc6f2a15a8a306ec6b13805264c73ed44d0775a7f16543f14a03a5acb"
+      }
+   ]
+}
