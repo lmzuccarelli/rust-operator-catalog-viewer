@@ -20,7 +20,7 @@ Ensure that you have the correct permissions set in the $XDG_RUNTIME_DIR/contain
 Execute the following to copy to local disk 
 
 ```bash
-cd rust-catalog-operator viewer
+cd rust-catalog-operator-viewer
 
 mkdir -p working-dir
 
@@ -48,7 +48,7 @@ make build
 
 ```
 
-## Testing
+## Unit Testing & Code coverage
 
 Ensure grcov and  llvm tools-preview are installed
 
