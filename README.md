@@ -9,7 +9,7 @@ This is still a WIP. I haven't completed all unit testing and there are bugs to 
 I used a simple approach - Occam's razor
 
 - A scientific and philosophical rule that entities should not be multiplied unnecessarily (KISS)
-- only RedHat catalog has been tested
+- Only RedHat's operator catalog index has been tested
 
 ## Usage
 
