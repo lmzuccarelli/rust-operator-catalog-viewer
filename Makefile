@@ -4,8 +4,6 @@ all: clean test build
 
 LEVEL ?= "info"
 TEST ?= ""
-DIFF ?= false
-DOCKER_DESTINATION ?= "docker://127.0.0.1:5000/test"
 
 build: 
 	cargo build
@@ -22,12 +20,6 @@ test-by-name: clean
 cover:
 	grcov . --binary-path ./target/debug/deps/ -s . -t html --branch --ignore-not-existing --ignore '../*' --ignore "/*" --ignore "src/main.rs" --ignore "src/api/*"  -o target/coverage/html
 	cp target/coverage/html/html/badges/flat.svg assets/
-
-run-d2m:
-	cargo run -- --config imagesetconfig.yaml --diff-tar $(DIFF)  --loglevel $(LEVEL) --destination $(DOCKER_DESTINATION)
-
-run-m2d:
-	cargo run -- --config imagesetconfig.yaml --diff-tar $(DIFF)  --loglevel $(LEVEL) --destination file://
 
 clean:
 	rm -rf cargo-test*

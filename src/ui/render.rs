@@ -305,8 +305,9 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
                 // strip the registry from the image
                 let mut splitter = b.image.splitn(2, '/');
                 let image = splitter.nth(1).unwrap().to_string();
+                let name = b.name.split('/').last().unwrap();
                 rows.push(Row::new(vec![
-                    Cell::from(Span::raw(b.name.to_string())),
+                    Cell::from(Span::raw(name.to_string())),
                     Cell::from(Span::raw(image.to_string())),
                 ]));
             }
