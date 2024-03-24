@@ -147,7 +147,7 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
         for (k, _v) in ch_map.iter() {
             ch_items.push(k.to_string());
             for x in ch_map.get(k).unwrap().iter() {
-                ch_items.push("* ".to_owned() + &x.clone().name.clone());
+                ch_items.push("  ".to_owned() + &x.clone().name.clone());
             }
         }
 
@@ -295,7 +295,7 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
         }
     } else {
         // this has to be a bundle
-        let b_name = cb_name.clone().split("* ").nth(1).unwrap().to_owned();
+        let b_name = cb_name.clone().split("  ").nth(1).unwrap().to_owned();
         let b_name = b_name.trim().to_string() + "=olm.bundle";
         let hld_dc = app.declarative_config.get(&b_name);
         if hld_dc.is_some() {

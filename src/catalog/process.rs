@@ -81,14 +81,18 @@ pub fn build_updated_configs(base_dir: String) -> Result<(), Box<dyn Error>> {
                             update = "{".to_string() + item + "}";
                         }
                         let dir = file_name.split("catalog.json").nth(0).unwrap();
-                        let update_dir = dir.to_string()
-                            + "/updated-configs/uc"
-                            + pos.to_string().as_str()
-                            + ".json";
+                        // parse the file (we know its json)
+                        let dc =
+                            serde_json::from_str::<DeclarativeConfig>(&update.clone()).unwrap();
+                        let name = dc.clone().name.unwrap().to_string();
+                        // now marshal to json (this cleans all unwanted fields)
+                        // and finally write to disk
+                        let json_contents = serde_json::to_string(&dc).unwrap();
+                        let update_dir = dir.to_string() + "/updated-configs/" + &name + ".json";
 
                         fs::create_dir_all(dir.to_string() + "/updated-configs")
                             .expect("must create dir");
-                        fs::write(update_dir.clone(), update.clone())
+                        fs::write(update_dir.clone(), json_contents.clone())
                             .expect("must write updated json file");
                     }
                 }
