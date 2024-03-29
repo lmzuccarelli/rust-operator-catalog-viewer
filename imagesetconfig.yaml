@@ -3,3 +3,4 @@ apiVersion: alpha1
 mirror:
   operators:
     - catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.15"
+    - catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.14"
