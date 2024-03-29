@@ -36,15 +36,17 @@ mirror:
   - catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.15"
 
 # build
+# this uses Rust build optimization (see Cargo.toml for more details)
+# current binary is 3.1M
 make build
 
 # download and untar the blobs
-./target/debug/rust-operator-catalog-viewer --ui false --config imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
+./target/release/rust-operator-catalog-viewer --ui false --config imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
 
 # copy the full dir from the previous step 
 # execute the viewer
 # in my instance the full path is ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/
-./target/debug/rust-operator-catalog-viewer --ui true --config imagesetconfig.yaml --loglevel debug --base-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
+./target/release/rust-operator-catalog-viewer --ui true --config imagesetconfig.yaml --loglevel debug --base-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
 
 ```
 

@@ -1,11 +1,9 @@
-use crate::api::schema::*;
-use crate::auth::credentials::*;
-use crate::batch::copy::*;
-use crate::catalog::process::build_updated_configs;
-use crate::index::resolve::*;
-use crate::log::logging::*;
-use crate::manifests::catalogs::*;
-
+use custom_logger::*;
+use mirror_auth::*;
+use mirror_catalog::*;
+use mirror_catalog_index::*;
+use mirror_config::Operator;
+use mirror_copy::*;
 use std::fs;
 use std::fs::DirBuilder;
 use std::os::unix::fs::DirBuilderExt;
@@ -103,7 +101,8 @@ pub async fn get_operator_catalog<T: RegistryInterface>(
             "full path for directory 'configs' {} ",
             &config_dir
         ));
-        build_updated_configs(config_dir.clone()).expect("should build updated configs");
+        DeclarativeConfig::build_updated_configs(config_dir.clone())
+            .expect("should build updated configs");
     }
 }
 
@@ -144,18 +143,9 @@ mod tests {
             )
             .create();
 
-        let pkg = Package {
-            name: String::from("some-operator"),
-            channels: None,
-            min_version: None,
-            max_version: None,
-            min_bundle: None,
-        };
-
-        let pkgs = vec![pkg];
         let op = Operator {
             catalog: String::from(url.replace("http://", "") + "/test/test-index-operator:v1.0"),
-            packages: Some(pkgs),
+            packages: None,
         };
 
         #[derive(Clone)]
@@ -221,6 +211,20 @@ mod tests {
                 _token: String,
                 _layers: Vec<FsLayer>,
             ) -> Result<String, Box<dyn std::error::Error>> {
+                log.info("testing logging in fake test");
+                Ok(String::from("test"))
+            }
+
+            // not used in the viewer
+            async fn push_image(
+                &self,
+                log: &Logging,
+                _dir: String,
+                _sub_component: String,
+                _url: String,
+                _token: String,
+                _manifest: Manifest,
+            ) -> Result<String, mirror_copy::MirrorError> {
                 log.info("testing logging in fake test");
                 Ok(String::from("test"))
             }

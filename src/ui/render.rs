@@ -1,8 +1,57 @@
-use crate::api::schema::*;
-use crate::catalog::process::*;
-use crate::log::logging::*;
+use crossterm::event::{self, Event, KeyCode, KeyEventKind};
+use custom_logger::*;
+use mirror_catalog::*;
+use ratatui::widgets::ListState;
 use ratatui::{prelude::*, widgets::*};
 use std::collections::HashMap;
+use std::io;
+
+#[derive(Debug, Clone)]
+pub struct StatefulList<T> {
+    pub state: ListState,
+    pub items: Vec<T>,
+}
+
+impl<T> StatefulList<T> {
+    pub fn with_items(items: Vec<T>) -> Self {
+        let mut st = ListState::default();
+        // set first item as selected
+        st.select(Some(0));
+        Self { state: st, items }
+    }
+
+    pub fn next(&mut self) {
+        if self.items.len() > 0 {
+            let i = match self.state.selected() {
+                Some(i) => {
+                    if i >= self.items.len() - 1 {
+                        0
+                    } else {
+                        i + 1
+                    }
+                }
+                None => 0,
+            };
+            self.state.select(Some(i));
+        }
+    }
+
+    pub fn previous(&mut self) {
+        if self.items.len() > 0 {
+            let i = match self.state.selected() {
+                Some(i) => {
+                    if i == 0 {
+                        self.items.len() - 1
+                    } else {
+                        i - 1
+                    }
+                }
+                None => 0,
+            };
+            self.state.select(Some(i));
+        }
+    }
+}
 
 /// set up the app state for the ui
 // keep the schema and api in the same module
@@ -21,7 +70,7 @@ impl App<'_> {
             log_level: Level::INFO,
         };
         let this_base_dir = base_dir.clone().to_owned();
-        let hld_packages = get_packages(&this_base_dir.clone().to_string());
+        let hld_packages = DeclarativeConfig::get_packages(&this_base_dir.clone().to_string());
         let mut packages: Vec<String> = vec![];
         if hld_packages.is_err() {
             log.error("unable to get packages");
@@ -30,7 +79,7 @@ impl App<'_> {
         }
         // actaully should find the first item in the list
         // rather than hard code it
-        let dc_map = get_declarativeconfig_map(
+        let dc_map = DeclarativeConfig::get_declarativeconfig_map(
             this_base_dir.clone().to_string() + &"3scale-operator/updated-configs/",
         );
 
@@ -41,6 +90,34 @@ impl App<'_> {
             declarative_config: dc_map,
             path: this_base_dir.clone(),
             last_update: 999,
+        }
+    }
+}
+
+/// run the app (event loop)
+pub fn run_app<B: Backend>(terminal: &mut Terminal<B>, app: &mut App) -> io::Result<()> {
+    loop {
+        terminal.draw(|f| render_ui(f, app))?;
+        if let Event::Key(key) = event::read()? {
+            if key.kind == KeyEventKind::Press {
+                use KeyCode::*;
+                match key.code {
+                    Char('q') | Esc => return Ok(()),
+                    Down => {
+                        app.packages.next();
+                    }
+                    Up => {
+                        app.packages.previous();
+                    }
+                    Left => {
+                        app.channels.previous();
+                    }
+                    Right => {
+                        app.channels.next();
+                    }
+                    _ => {}
+                }
+            }
         }
     }
 }
@@ -131,8 +208,9 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
 
     if selected_id != app.last_update {
         // load the declarative_config for the given package
-        let dc_map =
-            get_declarativeconfig_map(app.path.to_string() + &pkg_name + &"/updated-configs/");
+        let dc_map = DeclarativeConfig::get_declarativeconfig_map(
+            app.path.to_string() + &pkg_name + &"/updated-configs/",
+        );
 
         // get the relevant channels
         let mut ch_map: HashMap<String, Vec<ChannelEntry>> = HashMap::new();

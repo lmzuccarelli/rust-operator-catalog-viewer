@@ -1,32 +1,24 @@
-use catalog::process::{build_updated_configs, get_declarativeconfig_map};
 use clap::Parser;
 use color_eyre::config::HookBuilder;
 use crossterm::{
-    event::{self, Event, KeyCode, KeyEventKind},
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     ExecutableCommand,
 };
+use custom_logger::*;
+use mirror_catalog::DeclarativeConfig;
+use mirror_config::*;
+use mirror_copy::ImplRegistryInterface;
 use ratatui::prelude::*;
+use std::io::stdout;
 use std::process;
-use std::{io, io::stdout};
 use tokio;
 
 // define local modules
 mod api;
-mod auth;
-mod batch;
-mod catalog;
-mod config;
-mod error;
-mod index;
-mod log;
-mod manifests;
 mod operator;
 mod ui;
 
 use api::schema::*;
-use config::read::*;
-use log::logging::*;
 use operator::collector::*;
 use ui::render::*;
 
@@ -57,9 +49,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     if dev_enabled {
         let component = base_dir.clone() + &operator + &"/updated-configs/";
         let component_base = base_dir.clone() + &operator;
-        let dc = get_declarativeconfig_map(component.clone());
+        let dc = DeclarativeConfig::get_declarativeconfig_map(component.clone());
         log.debug(&format!("declarative config keys {:#?}", dc.keys()));
-        let res = build_updated_configs(component_base.clone());
+        let res = DeclarativeConfig::build_updated_configs(component_base.clone());
         log.debug(&format!("updated configs {:#?}", res));
         process::exit(0);
     }
@@ -68,8 +60,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         log.info(&format!("rust-operator-catalog-viewer {} ", cfg));
 
         // Parse the config serde_yaml::ImageSetConfiguration.
-        let config = load_config(cfg).unwrap();
-        let isc_config = parse_yaml_config(config.clone()).unwrap();
+        let config = ImageSetConfig::load_config(cfg).unwrap();
+        let isc_config = ImageSetConfig::parse_yaml_config(config.clone()).unwrap();
         log.debug(&format!(
             "image set config operators {:#?}",
             isc_config.mirror.operators
@@ -98,7 +90,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("{err:?}");
         }
     }
-
     Ok(())
 }
 
@@ -129,32 +120,4 @@ fn restore_terminal() -> color_eyre::Result<()> {
     disable_raw_mode()?;
     stdout().execute(LeaveAlternateScreen)?;
     Ok(())
-}
-
-/// run the app (event loop)
-fn run_app<B: Backend>(terminal: &mut Terminal<B>, app: &mut App) -> io::Result<()> {
-    loop {
-        terminal.draw(|f| render_ui(f, app))?;
-        if let Event::Key(key) = event::read()? {
-            if key.kind == KeyEventKind::Press {
-                use KeyCode::*;
-                match key.code {
-                    Char('q') | Esc => return Ok(()),
-                    Down => {
-                        app.packages.next();
-                    }
-                    Up => {
-                        app.packages.previous();
-                    }
-                    Left => {
-                        app.channels.previous();
-                    }
-                    Right => {
-                        app.channels.next();
-                    }
-                    _ => {}
-                }
-            }
-        }
-    }
 }

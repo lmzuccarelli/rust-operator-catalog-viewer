@@ -418,6 +418,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "custom-logger"
+version = "0.1.0"
+source = "git+https://github.com/lmzuccarelli/rust-custom-logger?branch=main#1180b1a89b7600df8dd02a91478d3d37a9651a6b"
+dependencies = [
+ "chrono",
+]
+
+[[package]]
 name = "dashmap"
 version = "5.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -952,6 +960,80 @@ dependencies = [
 ]
 
 [[package]]
+name = "mirror-auth"
+version = "0.1.1"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#40cfcaabc5898372def1034124fc1bfa7f035f59"
+dependencies = [
+ "base64",
+ "custom-logger",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "urlencoding",
+]
+
+[[package]]
+name = "mirror-catalog"
+version = "0.1.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#0539f3f7d812a0181a2e1408f6935fe0bacf30bb"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_yaml",
+ "void",
+ "walkdir",
+]
+
+[[package]]
+name = "mirror-catalog-index"
+version = "0.1.1"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#dba1748d0e09c0cb787f86ce9597c289e2aa0bed"
+dependencies = [
+ "custom-logger",
+ "flate2",
+ "mirror-config",
+ "mirror-copy",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "tar",
+]
+
+[[package]]
+name = "mirror-config"
+version = "0.1.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-config?branch=main#dab48f85ab30ead798916851f6ef8f70e85488c6"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_yaml",
+]
+
+[[package]]
+name = "mirror-copy"
+version = "0.1.3"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#94d53f94744d278580b881dd2a47e6e5b1bd0628"
+dependencies = [
+ "async-trait",
+ "base64",
+ "custom-logger",
+ "flate2",
+ "futures",
+ "hex",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tokio",
+ "urlencoding",
+]
+
+[[package]]
 name = "mockito"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1338,7 +1420,7 @@ dependencies = [
 
 [[package]]
 name = "rust-operator-catalog-viewer"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "async-trait",
  "base64",
@@ -1346,9 +1428,15 @@ dependencies = [
  "clap",
  "color-eyre",
  "crossterm",
+ "custom-logger",
  "flate2",
  "futures",
  "hex",
+ "mirror-auth",
+ "mirror-catalog",
+ "mirror-catalog-index",
+ "mirror-config",
+ "mirror-copy",
  "mockito",
  "rand 0.7.3",
  "ratatui",
