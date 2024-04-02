@@ -419,8 +419,8 @@ dependencies = [
 
 [[package]]
 name = "custom-logger"
-version = "0.1.0"
-source = "git+https://github.com/lmzuccarelli/rust-custom-logger?branch=main#1180b1a89b7600df8dd02a91478d3d37a9651a6b"
+version = "0.1.3"
+source = "git+https://github.com/lmzuccarelli/rust-custom-logger?branch=main#42eac60c101f8298a5735fe3fe1428039f875f99"
 dependencies = [
  "chrono",
 ]
@@ -988,8 +988,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog-index"
-version = "0.1.1"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#dba1748d0e09c0cb787f86ce9597c289e2aa0bed"
+version = "0.1.2"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#7039a051032d5aa0661deaacd0332e6dec7e1adb"
 dependencies = [
  "custom-logger",
  "flate2",
