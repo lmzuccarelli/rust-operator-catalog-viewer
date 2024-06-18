@@ -51,7 +51,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let component_base = base_dir.clone() + &operator;
         let dc = DeclarativeConfig::get_declarativeconfig_map(component.clone());
         log.debug(&format!("declarative config keys {:#?}", dc.keys()));
-        let res = DeclarativeConfig::build_updated_configs(component_base.clone());
+        let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
         log.debug(&format!("updated configs {:#?}", res));
         process::exit(0);
     }

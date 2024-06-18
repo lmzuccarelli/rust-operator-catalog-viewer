@@ -419,8 +419,8 @@ dependencies = [
 
 [[package]]
 name = "custom-logger"
-version = "0.1.3"
-source = "git+https://github.com/lmzuccarelli/rust-custom-logger?branch=main#42eac60c101f8298a5735fe3fe1428039f875f99"
+version = "0.1.4"
+source = "git+https://github.com/lmzuccarelli/rust-custom-logger?branch=main#f0ab24a95fdad4ed0df9f217f6add076f1d34897"
 dependencies = [
  "chrono",
 ]
@@ -975,9 +975,9 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog"
-version = "0.1.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#0539f3f7d812a0181a2e1408f6935fe0bacf30bb"
+version = "0.3.0"
 dependencies = [
+ "custom-logger",
  "serde",
  "serde_derive",
  "serde_json",

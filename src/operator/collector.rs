@@ -101,7 +101,7 @@ pub async fn get_operator_catalog<T: RegistryInterface>(
             "full path for directory 'configs' {} ",
             &config_dir
         ));
-        DeclarativeConfig::build_updated_configs(config_dir.clone())
+        DeclarativeConfig::build_updated_configs(log, config_dir.clone())
             .expect("should build updated configs");
     }
 }
