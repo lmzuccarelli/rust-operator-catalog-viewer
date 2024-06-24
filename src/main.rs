@@ -75,7 +75,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_operator_catalog(
                 reg_con.clone(),
                 log,
-                String::from("./working-dir/"),
+                base_dir.clone(),
                 isc_config.mirror.operators.unwrap(),
             )
             .await;

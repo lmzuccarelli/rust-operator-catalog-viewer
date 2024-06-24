@@ -1,6 +1,6 @@
 [package]
-name = "rust-operator-catalog-viewer"
-version = "0.1.1"
+name = "operator-catalog-viewer"
+version = "0.1.2"
 edition = "2021"
 authors = ["Luigi Zuccarelli"]
 

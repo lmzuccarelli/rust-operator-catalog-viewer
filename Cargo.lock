@@ -1150,6 +1150,46 @@ dependencies = [
 ]
 
 [[package]]
+name = "operator-catalog-viewer"
+version = "0.1.2"
+dependencies = [
+ "async-trait",
+ "base64",
+ "chrono",
+ "clap",
+ "color-eyre",
+ "crossterm",
+ "custom-logger",
+ "flate2",
+ "futures",
+ "hex",
+ "mirror-auth",
+ "mirror-catalog",
+ "mirror-catalog-index",
+ "mirror-config",
+ "mirror-copy",
+ "mockito",
+ "rand 0.7.3",
+ "ratatui",
+ "reqwest",
+ "rm_rf",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_yaml",
+ "serial_test",
+ "sha2",
+ "strum",
+ "tar",
+ "thiserror",
+ "tokio",
+ "tokio-test",
+ "urlencoding",
+ "void",
+ "walkdir",
+]
+
+[[package]]
 name = "owo-colors"
 version = "3.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1417,46 +1457,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3443b7a35aa12ed2e99edfc0ecbefe6a53b4848305cc83e29981dfa1aea1f71e"
 dependencies = [
  "stacker",
-]
-
-[[package]]
-name = "rust-operator-catalog-viewer"
-version = "0.1.1"
-dependencies = [
- "async-trait",
- "base64",
- "chrono",
- "clap",
- "color-eyre",
- "crossterm",
- "custom-logger",
- "flate2",
- "futures",
- "hex",
- "mirror-auth",
- "mirror-catalog",
- "mirror-catalog-index",
- "mirror-config",
- "mirror-copy",
- "mockito",
- "rand 0.7.3",
- "ratatui",
- "reqwest",
- "rm_rf",
- "serde",
- "serde_derive",
- "serde_json",
- "serde_yaml",
- "serial_test",
- "sha2",
- "strum",
- "tar",
- "thiserror",
- "tokio",
- "tokio-test",
- "urlencoding",
- "void",
- "walkdir",
 ]
 
 [[package]]
