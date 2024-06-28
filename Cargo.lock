@@ -961,8 +961,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-auth"
-version = "0.1.1"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#40cfcaabc5898372def1034124fc1bfa7f035f59"
+version = "0.3.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#297e93c358fba0c2b78f018acb8f40af85c71533"
 dependencies = [
  "base64",
  "custom-logger",
@@ -975,8 +975,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog"
-version = "0.3.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#9ac66eb71fead52f3bd206f75b926eea49e91212"
+version = "0.4.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#f69dcf8f1005cc23f710606decca5d224cfd4b9b"
 dependencies = [
  "custom-logger",
  "serde",
@@ -1151,7 +1151,7 @@ dependencies = [
 
 [[package]]
 name = "operator-catalog-viewer"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "base64",

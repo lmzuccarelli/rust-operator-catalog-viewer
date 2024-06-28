@@ -8,6 +8,7 @@ use std::fs;
 use std::fs::DirBuilder;
 use std::os::unix::fs::DirBuilderExt;
 use std::path::Path;
+use std::process;
 
 // download the latest catalog
 pub async fn get_operator_catalog<T: RegistryInterface>(
@@ -31,10 +32,14 @@ pub async fn get_operator_catalog<T: RegistryInterface>(
         );
         log.trace(&format!("manifest json file {}", manifest_json));
         let token = get_token(log, ir.registry.clone()).await;
+        if token.is_err() {
+            log.error(&format!("{:#?}", token.err()));
+            process::exit(1);
+        }
         // use token to get manifest
         let manifest_url = get_image_manifest_url(ir.clone());
         let manifest = reg_con
-            .get_manifest(manifest_url.clone(), token.clone())
+            .get_manifest(manifest_url.clone(), token.as_ref().unwrap().clone())
             .await
             .unwrap();
 
@@ -79,7 +84,7 @@ pub async fn get_operator_catalog<T: RegistryInterface>(
                     log,
                     sub_dir.clone(),
                     blobs_url,
-                    token.clone(),
+                    token.unwrap().clone(),
                     res_manifest_in_mem.fs_layers.clone(),
                 )
                 .await;
