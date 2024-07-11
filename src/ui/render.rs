@@ -381,12 +381,12 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
             for bundle in dc.related_images.clone().unwrap().iter() {
                 let b = bundle.clone();
                 // strip the registry from the image
-                let mut splitter = b.image.splitn(2, '/');
-                let image = splitter.nth(1).unwrap().to_string();
+                //let mut splitter = b.image.splitn(2, '/');
+                //let image = splitter.nth(1).unwrap().to_string();
                 let name = b.name.split('/').last().unwrap();
                 rows.push(Row::new(vec![
                     Cell::from(Span::raw(name.to_string())),
-                    Cell::from(Span::raw(image.to_string())),
+                    Cell::from(Span::raw(b.image.to_string())),
                 ]));
             }
             contraints = vec![Constraint::Length(60), Constraint::Length(200)];
