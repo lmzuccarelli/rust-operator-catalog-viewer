@@ -55,8 +55,8 @@ impl<T> StatefulList<T> {
 
 /// set up the app state for the ui
 // keep the schema and api in the same module
-pub struct App<'a> {
-    pub name: &'a str,
+pub struct App {
+    pub name: String,
     pub packages: StatefulList<String>,
     pub channels: StatefulList<String>,
     pub declarative_config: HashMap<String, DeclarativeConfig>,
@@ -64,7 +64,7 @@ pub struct App<'a> {
     pub last_update: usize,
 }
 
-impl App<'_> {
+impl App {
     pub fn new(base_dir: String) -> Self {
         let log = Logging {
             log_level: Level::INFO,
@@ -83,8 +83,13 @@ impl App<'_> {
             this_base_dir.clone().to_string() + &"3scale-operator/updated-configs/",
         );
 
+        // add the actual catalog of interest in the header
+        let catalog = base_dir.split("/working-dir/").nth(1).unwrap();
+        let catalog_name = catalog.split("/cache/").nth(0).unwrap();
+        let title = format!("catalog viewer [ {} ]", catalog_name.replace("/", ":"));
+
         Self {
-            name: "operator catalog viewer ",
+            name: title.clone(),
             packages: StatefulList::with_items(packages),
             channels: StatefulList::with_items(vec![]),
             declarative_config: dc_map,
@@ -139,7 +144,7 @@ pub fn render_ui(frame: &mut Frame, app: &mut App) {
         )
         .split(size);
 
-    let title = Paragraph::new(app.name)
+    let title = Paragraph::new(app.name.as_str())
         .style(Style::default().fg(Color::Yellow))
         .alignment(Alignment::Center)
         .block(
