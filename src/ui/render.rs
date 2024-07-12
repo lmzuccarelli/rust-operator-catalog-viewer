@@ -4,7 +4,7 @@ use mirror_catalog::*;
 use ratatui::widgets::ListState;
 use ratatui::{prelude::*, widgets::*};
 use std::collections::HashMap;
-use std::io;
+use std::{env, io};
 
 #[derive(Debug, Clone)]
 pub struct StatefulList<T> {
@@ -173,7 +173,14 @@ pub fn render_ui(frame: &mut Frame, app: &mut App) {
     frame.render_stateful_widget(center, body[1], &mut app.channels.state.clone());
     frame.render_widget(right, body[2]);
 
-    let copyright = Paragraph::new("version v0.0.1 2024  [ use ▲ ▼  to change package,  ◄  ► to change channel/bundle, q to quit ]")
+    let version = env!["CARGO_PKG_VERSION"];
+    let name = env!["CARGO_PKG_NAME"];
+    let title = format!(
+        "{} {} 2024 [ use ▲ ▼  to change package,  ◄  ► to change channel/bundle, q to quit ]",
+        name, version
+    );
+
+    let copyright = Paragraph::new(title.clone())
         .style(Style::default().fg(Color::Yellow))
         .alignment(Alignment::Center)
         .block(
