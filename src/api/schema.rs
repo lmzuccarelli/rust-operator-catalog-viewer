@@ -28,4 +28,8 @@ pub struct Cli {
     // used with dev_enable to test
     #[arg(short, long, value_name = "operator", default_value = "")]
     pub operator: Option<String>,
+
+    // process all architectures
+    #[arg(short, long, value_name = "all-arch", default_value = "false")]
+    pub all_arch: Option<bool>,
 }

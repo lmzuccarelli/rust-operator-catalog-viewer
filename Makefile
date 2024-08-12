@@ -23,3 +23,7 @@ cover:
 
 clean:
 	rm -rf cargo-test*
+
+clean-all: clean
+	cargo clean
+

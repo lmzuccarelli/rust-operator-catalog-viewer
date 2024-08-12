@@ -32,6 +32,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let base_dir = args.base_dir.unwrap() + "/";
     let dev_enabled = args.dev_enable.unwrap();
     let operator = args.operator.unwrap();
+    let all_arch = args.all_arch.unwrap();
 
     // convert to enum
     let res_log_level = match level.as_str() {
@@ -57,28 +58,33 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     if !ui {
-        log.info(&format!("rust-operator-catalog-viewer {} ", cfg));
+        log.info(&format!("operator-catalog-viewer {} ", cfg));
 
         // Parse the config serde_yaml::ImageSetConfiguration.
-        let config = ImageSetConfig::load_config(cfg).unwrap();
-        let isc_config = ImageSetConfig::parse_yaml_config(config.clone()).unwrap();
-        log.debug(&format!(
-            "image set config operators {:#?}",
-            isc_config.mirror.operators
-        ));
+        let config = ImageSetConfig::load_config(cfg);
+        if config.is_ok() {
+            let isc_config = ImageSetConfig::parse_yaml_config(config.unwrap().clone()).unwrap();
+            log.debug(&format!(
+                "image set config operators {:#?}",
+                isc_config.mirror.operators
+            ));
 
-        // initialize the client request interface
-        let reg_con = ImplRegistryInterface {};
+            // initialize the client request interface
+            let reg_con = ImplRegistryInterface {};
 
-        // check for release image
-        if isc_config.mirror.operators.is_some() {
-            get_operator_catalog(
-                reg_con.clone(),
-                log,
-                base_dir.clone(),
-                isc_config.mirror.operators.unwrap(),
-            )
-            .await;
+            // check for release image
+            if isc_config.mirror.operators.is_some() {
+                get_operator_catalog(
+                    reg_con.clone(),
+                    log,
+                    base_dir.clone(),
+                    all_arch,
+                    isc_config.mirror.operators.unwrap(),
+                )
+                .await;
+            }
+        } else {
+            log.error(&format!("{}", config.err().unwrap()));
         }
     } else {
         init_error_hooks()?;
