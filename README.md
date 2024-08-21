@@ -31,6 +31,7 @@ mkdir -p working-dir
 chmod -R 755 working-dir (permissions need to be relaxed for untarred blobs)
 
 # create an ImageSetConfig (this uses the example in this repo)
+# note as this only refers to operators , platform releases and additionalImages should not be included
 kind: ImageSetConfiguration
 apiVersion: alpha1
 mirror:
@@ -43,12 +44,12 @@ mirror:
 make build
 
 # download and untar the blobs
-./target/release/operator-catalog-viewer --ui false --config imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
+./target/release/operator-catalog-viewer --ui false --config examples/imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
 
 # copy the full dir from the previous step 
 # execute the viewer
 # in my instance the full path is ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/
-./target/release/operator-catalog-viewer --ui true --config imagesetconfig.yaml --loglevel debug --base-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
+./target/release/operator-catalog-viewer --ui true --config examples/imagesetconfig.yaml --loglevel debug --base-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
 
 ```
 

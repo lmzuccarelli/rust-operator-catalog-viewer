@@ -110,6 +110,7 @@ pub async fn get_operator_catalog<T: RegistryInterface>(
                                 blob_sum: l.digest.clone(),
                                 original_ref: Some(ir.name.clone()),
                                 size: Some(l.size),
+                                number: None,
                             };
                             fslayers.insert(0, fsl);
                         }
@@ -272,7 +273,7 @@ mod tests {
                 _url: String,
                 _token: String,
                 _layers: Vec<FsLayer>,
-            ) -> Result<String, Box<dyn std::error::Error>> {
+            ) -> Result<String, MirrorError> {
                 log.info("testing logging in fake test");
                 Ok(String::from("test"))
             }
