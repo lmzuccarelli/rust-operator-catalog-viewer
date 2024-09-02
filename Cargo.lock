@@ -977,11 +977,13 @@ dependencies = [
 
 [[package]]
 name = "mirror-auth"
-version = "0.4.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#949caf0cd33e53391d4c5cb666039a30fc4a1329"
+version = "0.6.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#6eede51b2323c6adb440688f74c4858ee840973b"
 dependencies = [
+ "async-trait",
  "base64",
  "custom-logger",
+ "mirror-error",
  "reqwest",
  "serde",
  "serde_derive",
@@ -991,8 +993,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog"
-version = "0.4.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#f69dcf8f1005cc23f710606decca5d224cfd4b9b"
+version = "0.4.1"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#07c9cda0456e580db347cea4c634b4bfdf3c95c5"
 dependencies = [
  "custom-logger",
  "serde",
@@ -1005,8 +1007,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog-index"
-version = "0.3.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#b405445e679784605063fb44e7ca008808a84b99"
+version = "0.4.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#719cc3675455780b1be331159ca1c186231ac2fb"
 dependencies = [
  "custom-logger",
  "flate2",
@@ -1031,8 +1033,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-copy"
-version = "0.4.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#df892efcb08a6e693a768003e414fb26a380f746"
+version = "0.6.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#6809a4321143e1c4e8e0b31947de9f416b0e6fb3"
 dependencies = [
  "async-trait",
  "base64",
@@ -1040,14 +1042,36 @@ dependencies = [
  "flate2",
  "futures",
  "hex",
+ "mirror-error",
  "reqwest",
  "serde",
  "serde_derive",
  "serde_json",
  "sha2",
+ "sha256",
  "tar",
  "tokio",
  "urlencoding",
+]
+
+[[package]]
+name = "mirror-error"
+version = "0.1.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-error?branch=main#9d9c5dd348f3ab9168d20e266c5ec3b07f7f3851"
+
+[[package]]
+name = "mirror-utils"
+version = "0.1.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-utils?branch=main#bd3f8fb4f6a9da2098cdbf8c31865849ca1609da"
+dependencies = [
+ "custom-logger",
+ "mirror-catalog-index",
+ "mirror-copy",
+ "mirror-error",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "sha256",
 ]
 
 [[package]]
@@ -1173,6 +1197,8 @@ dependencies = [
  "mirror-catalog-index",
  "mirror-config",
  "mirror-copy",
+ "mirror-error",
+ "mirror-utils",
  "mockito",
  "rand 0.7.3",
  "ratatui",
@@ -1650,6 +1676,19 @@ dependencies = [
  "cfg-if",
  "cpufeatures",
  "digest",
+]
+
+[[package]]
+name = "sha256"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "18278f6a914fa3070aa316493f7d2ddfb9ac86ebc06fa3b83bffda487e9065b0"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "hex",
+ "sha2",
+ "tokio",
 ]
 
 [[package]]

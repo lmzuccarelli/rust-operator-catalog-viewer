@@ -1,172 +1,235 @@
+use crate::batch::worker::execute_batch;
 use custom_logger::*;
 use mirror_auth::*;
 use mirror_catalog::*;
 use mirror_catalog_index::*;
 use mirror_config::Operator;
-use mirror_copy::*;
-use std::fs;
+use mirror_copy::{FsLayer, RegistryInterface};
+use mirror_error::MirrorError;
+use mirror_utils::{
+    fs_handler, parse_image, parse_json_manifest_operator, parse_json_manifestlist,
+    process_and_update_manifest,
+};
+use std::collections::HashMap;
 use std::fs::DirBuilder;
 use std::os::unix::fs::DirBuilderExt;
 use std::path::Path;
-use std::process;
 
 // download the latest catalog
-pub async fn get_operator_catalog<T: RegistryInterface>(
+pub async fn get_operator_catalog<T: RegistryInterface + Clone>(
     reg_con: T,
     log: &Logging,
     dir: String,
-    all_arch: bool,
+    _all_arch: bool,
+    token_enable: bool,
     operators: Vec<Operator>,
-) {
-    log.hi("operator download");
+) -> Result<(), MirrorError> {
+    log.hi("[get_operator_catalog] collector");
+    // set up dir to store all manifests
+    fs_handler(
+        format!("{}/{}", dir.clone(), "manifests/operator".to_string()),
+        "create_dir",
+        None,
+    )
+    .await?;
 
     // parse the config - iterate through each catalog
-    let img_ref = parse_image_index(log, operators);
-    log.debug(&format!("image refs {:#?}", img_ref));
+    for operator in operators.clone().iter() {
+        let ir = parse_image(log, operator.catalog.clone());
+        log.debug(&format!("image refs {:#?}", ir.clone()));
 
-    for ir in img_ref {
-        let token = get_token(log, ir.registry.clone()).await;
-        if token.is_err() {
-            log.error(&format!("{:#?}", token.err()));
-            process::exit(1);
+        let blobs_dir = dir.clone() + "/blobs-store";
+        let manifestlist: String;
+        let t_impl = ImplTokenInterface {};
+
+        // get all relevant catalogs in config
+        // download manifests and blobs if changed
+        // untar and set /configs directory
+
+        let manifestlist_json = format!(
+            "{}/{}/{}/manifest-list.json",
+            dir.clone(),
+            ir.name.clone(),
+            ir.version.clone(),
+        );
+        // use token to get manifest
+        let token = get_token(
+            t_impl.clone(),
+            log,
+            ir.registry.clone(),
+            "".to_string(),
+            token_enable,
+        )
+        .await?;
+        log.trace(&format!(
+            "[get_operator_catalog] manifest json file {}",
+            manifestlist_json
+        ));
+        // construct manifest api url
+        let manifest_url = &format!(
+            "https://{}/v2/{}/{}/manifests/{}",
+            ir.registry, ir.namespace, ir.name, ir.version
+        );
+
+        log.info(&format!(
+            "[get_operator_catalog] api call manifest for {}",
+            format!(
+                "{}/{}/{}/{}",
+                ir.registry, ir.namespace, ir.name, ir.version
+            )
+        ));
+
+        let mfstlist_dir = format!("{}/{}/{}", dir.clone(), ir.name.clone(), ir.version.clone());
+
+        // this should get a manifestlist
+        let res = reg_con
+            .clone()
+            .get_manifest(manifest_url.clone(), token.clone())
+            .await?;
+        fs_handler(mfstlist_dir, "create_dir", None).await?;
+
+        let res_manifestlist = process_and_update_manifest(
+            log,
+            res.clone(),
+            manifestlist_json.clone(),
+            HashMap::new(),
+        )
+        .await?;
+        log.trace(&format!(
+            "[get_operator_catalog] result from api call {}",
+            res.clone()
+        ));
+        if res_manifestlist.is_some() {
+            log.debug(&format!(
+                "[get_operator_catalog] process_and_update_manifest change {}",
+                res_manifestlist.as_ref().unwrap().clone()
+            ));
+            manifestlist = fs_handler(res_manifestlist.unwrap().clone(), "read", None).await?;
+        } else {
+            manifestlist = res.clone();
         }
-        // use token to get manifestlist
-        let manifest_url = get_image_manifest_url(ir.clone());
-        let manifest = reg_con
-            .get_manifest(manifest_url.clone(), token.as_ref().unwrap().clone())
-            .await;
+        let local_manifestlist = manifestlist.clone();
+        let local_pml = parse_json_manifestlist(local_manifestlist.clone())?;
+        for m in local_pml.clone().manifests.iter() {
+            let arch = m.platform.as_ref().unwrap().architecture.to_string();
+            let manifest_json = format!(
+                "{}/{}/{}/{}/manifest.json",
+                dir.clone(),
+                ir.name.clone(),
+                ir.version.clone(),
+                arch.clone(),
+            );
 
-        if manifest.is_ok() {
-            //let manifest_exists = Path::new(&manifest_json).exists();
-            let local_manifest = manifest.unwrap().clone();
-            log.trace(&format!("manifest {:#}", local_manifest.clone()));
-            let manifest_list = parse_json_manifestlist(local_manifest.clone());
-            if manifest_list.is_ok() {
-                for m in manifest_list.unwrap().manifests.iter() {
-                    let arch = m.platform.as_ref().unwrap().architecture.to_string();
-                    let manifest_json = get_manifest_json_file(
-                        dir.clone(),
-                        ir.name.clone(),
-                        ir.version.clone(),
-                        Some(arch.clone()),
-                    );
-                    // create the full path
-                    let manifest_dir = manifest_json.split("manifest.json").nth(0).unwrap();
-                    log.info(&format!("manifest directory {}", manifest_dir));
-                    fs::create_dir_all(manifest_dir).expect("unable to create manifest directory");
-                    log.trace(&format!("manifest json file {}", manifest_json));
-                    let mut ir_url = ir.clone();
-                    ir_url.version = m.digest.as_ref().unwrap().to_string();
-                    let mnfst_url = get_image_manifest_url(ir_url.clone());
-                    log.debug(&format!("manifest url {:#?}", mnfst_url.clone()));
-                    let manifest = reg_con
-                        .get_manifest(mnfst_url.clone(), token.as_ref().unwrap().clone())
-                        .await
-                        .unwrap();
+            // create the full path
+            let manifest_dir = manifest_json.split("manifest.json").nth(0).unwrap();
+            log.info(&format!(
+                "[get_operator_catalog] manifest directory {}",
+                manifest_dir
+            ));
+            fs_handler(manifest_dir.to_string(), "create_dir", None).await?;
+            let mnfst_url = &format!(
+                "https://{}/v2/{}/{}/manifests/{}",
+                ir.registry,
+                ir.namespace,
+                ir.name,
+                m.digest.as_ref().unwrap()
+            );
+            let manifest = reg_con
+                .get_manifest(mnfst_url.clone(), token.clone())
+                .await?;
+            let working_dir_cache = format!(
+                "{}/{}/{}/{}/cache",
+                dir.clone(),
+                ir.name.clone(),
+                ir.version.clone(),
+                arch.clone(),
+            );
+            let cache_exists = Path::new(&working_dir_cache).exists();
+            log.debug(&format!(
+                "[get_operator_catalog] main operator manifest file {}",
+                manifest_json
+            ));
+            let changed = process_and_update_manifest(
+                log,
+                manifest.clone(),
+                manifest_json.clone(),
+                HashMap::new(),
+            )
+            .await?;
+            if changed.is_some() {
+                log.info("[get_operator_catalog] detected change in manifest");
+                let changed_manifest = fs_handler(changed.unwrap().clone(), "read", None).await?;
+                let res_pm = parse_json_manifest_operator(changed_manifest.clone())?;
 
-                    fs::write(manifest_json.clone(), manifest.clone())
-                        .expect("unable to write (index) manifest.json file");
+                if cache_exists {
+                    // detected a change so clean the dir contents
+                    rm_rf::remove(&working_dir_cache)
+                        .expect("[get_operator_catalog] should delete current untarred cache");
+                }
+                // re-create the cache directory
+                let mut builder = DirBuilder::new();
+                builder.mode(0o777);
+                builder
+                    .create(&working_dir_cache)
+                    .expect("[get_operator_catalog] unable to create directory");
 
-                    let working_dir_cache = get_cache_dir(
-                        dir.clone(),
-                        ir.name.clone(),
-                        ir.version.clone(),
-                        Some(arch.clone()),
-                    );
+                let mut fslayers: Vec<FsLayer> = vec![];
+                for l in res_pm.clone().layers.unwrap().iter() {
+                    let fsl = FsLayer {
+                        blob_sum: l.digest.clone(),
+                        original_ref: Some(ir.name.clone()),
+                        size: Some(l.size),
+                        number: None,
+                    };
+                    fslayers.insert(0, fsl);
+                }
+                let blobs_url = format!(
+                    "https://{}/v2/{}/{}/blobs/",
+                    ir.registry, ir.namespace, ir.name
+                );
+                let mut hm: HashMap<String, Vec<FsLayer>> = HashMap::new();
+                hm.insert(blobs_url, fslayers.clone());
+                // use a concurrent process to get related blobs
+                execute_batch(reg_con.clone(), log, blobs_dir.clone(), false, true, hm).await?;
+                log.debug(&format!(
+                    "[get_operator_catalog] completed image index download"
+                ));
+                log.debug(&format!(
+                    "[get_operator_catalog] map {:#?}",
+                    fslayers.clone(),
+                ));
+                untar_layers(
+                    log,
+                    blobs_dir.clone(),
+                    working_dir_cache.clone(),
+                    fslayers.clone(),
+                )
+                .await;
 
-                    let cache_exists = Path::new(&working_dir_cache).exists();
-                    let blobs_dir = dir.clone() + "/blobs-store/";
-                    let res_manifest_in_mem =
-                        parse_json_manifest_operator(manifest.clone()).unwrap();
-                    let mut exists = true;
-                    if cache_exists {
-                        let manifest_on_disk = fs::read_to_string(&manifest_json).unwrap();
-                        let res_manifest_on_disk =
-                            parse_json_manifest_operator(manifest_on_disk).unwrap();
-                        if res_manifest_on_disk != res_manifest_in_mem || !cache_exists {
-                            exists = false;
-                        }
-                    } else {
-                        exists = false;
-                    }
-
-                    if !exists {
-                        log.info("detected change in index manifest");
-                        // detected a change so clean the dir contents
-                        if cache_exists {
-                            rm_rf::remove(&working_dir_cache)
-                                .expect("should delete current untarred cache");
-                            // re-create the cache directory
-                            let mut builder = DirBuilder::new();
-                            builder.mode(0o777);
-                            builder
-                                .create(&working_dir_cache)
-                                .expect("unable to create directory");
-                        }
-
-                        let mut fslayers: Vec<FsLayer> = vec![];
-                        for l in res_manifest_in_mem.layers.unwrap().iter() {
-                            let fsl = FsLayer {
-                                blob_sum: l.digest.clone(),
-                                original_ref: Some(ir.name.clone()),
-                                size: Some(l.size),
-                                number: None,
-                            };
-                            fslayers.insert(0, fsl);
-                        }
-
-                        let blobs_url = get_blobs_url(ir.clone());
-                        // use a concurrent process to get related blobs
-                        let response = reg_con
-                            .get_blobs(
-                                log,
-                                blobs_dir.clone(),
-                                blobs_url,
-                                token.as_ref().unwrap().clone(),
-                                fslayers.clone(),
-                            )
-                            .await;
-                        log.debug(&format!("completed image index download {:#?}", response));
-
-                        untar_layers(
-                            log,
-                            blobs_dir.clone(),
-                            working_dir_cache.clone(),
-                            fslayers.clone(),
-                        )
-                        .await;
-                        log.hi("completed untar of layers");
-                    }
-                    // find the directory 'configs'
-                    let config_dir =
-                        find_dir(log, working_dir_cache.clone(), "configs".to_string()).await;
+                log.hi("[get_operator_catalog] completed untar of layers");
+                // find the directory 'configs'
+                let config_dir =
+                    find_dir(log, working_dir_cache.clone(), "configs".to_string()).await;
+                if config_dir.len() == 0 {
+                    log.warn("[get_operator_catalog] 'configs' directory is empty");
+                } else {
                     log.mid(&format!(
-                        "full path for directory 'configs' {} ",
+                        "[get_operator_catalog] full path for directory 'configs' {} ",
                         &config_dir
                     ));
                     DeclarativeConfig::build_updated_configs(log, config_dir.clone())
-                        .expect("should build updated configs");
-
-                    if arch.clone() == "amd64" && !all_arch {
-                        break;
-                    }
+                        .expect("[get_operator_catalog] should build updated configs");
                 }
-            } else {
-                log.error(&format!(
-                    "processing manifestlist {:#?}",
-                    manifest_list.err().unwrap()
-                ));
-                process::exit(1);
             }
-        } else {
-            log.error(&format!(
-                "reading manifest from {:#?} {:#?}",
-                manifest_url.clone(),
-                manifest.err().unwrap()
-            ));
-            process::exit(1);
+
+            // as all architecture index files are identical
+            // it's ok to get one architecture as reference
+            if arch.clone() == "amd64" {
+                break;
+            }
         }
     }
+    Ok(())
 }
 
 #[cfg(test)]
@@ -174,6 +237,8 @@ mod tests {
     // this brings everything from parent's scope into this scope
     use super::*;
     use async_trait::async_trait;
+    use mirror_copy::Manifest;
+    use std::fs;
 
     macro_rules! aw {
         ($e:expr) => {
@@ -220,7 +285,7 @@ mod tests {
                 &self,
                 url: String,
                 _token: String,
-            ) -> Result<String, Box<dyn std::error::Error>> {
+            ) -> Result<String, MirrorError> {
                 let mut content = String::from("");
 
                 if url.contains("test-index-operator") {
@@ -266,16 +331,28 @@ mod tests {
                 Ok(content)
             }
 
-            async fn get_blobs(
+            async fn get_blob(
                 &self,
                 log: &Logging,
                 _dir: String,
                 _url: String,
                 _token: String,
+                _verify_blob: bool,
+                _blob_sum: String,
+            ) -> Result<(), MirrorError> {
+                log.info("testing logging in fake test");
+                Ok(())
+            }
+
+            async fn get_blobs(
+                &self,
+                _log: &Logging,
+                _dir: String,
+                _url: String,
+                _token: String,
                 _layers: Vec<FsLayer>,
             ) -> Result<String, MirrorError> {
-                log.info("testing logging in fake test");
-                Ok(String::from("test"))
+                Ok("ok".to_string())
             }
 
             // not used in the viewer
@@ -287,7 +364,7 @@ mod tests {
                 _url: String,
                 _token: String,
                 _manifest: Manifest,
-            ) -> Result<String, mirror_copy::MirrorError> {
+            ) -> Result<String, MirrorError> {
                 log.info("testing logging in fake test");
                 Ok(String::from("test"))
             }
@@ -296,12 +373,14 @@ mod tests {
         let fake = Fake {};
 
         let ops = vec![op.clone()];
-        aw!(get_operator_catalog(
+        let res = aw!(get_operator_catalog(
             fake.clone(),
             log,
             String::from("./test-artifacts/"),
             false,
+            false,
             ops.clone()
         ));
+        println!("result -> {}", res.is_ok());
     }
 }

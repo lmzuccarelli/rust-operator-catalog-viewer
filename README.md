@@ -21,7 +21,15 @@ Ensure that you have the correct permissions set in the $XDG_RUNTIME_DIR/contain
 
 You can download a pull secret from https://console.redhat.com/openshift/install/pull-secret and copy it to $XDG_RUNTIME_DIR/containers/auth.json
 
+**NB** In the lates update the command line now has 2 subcommands 
+- Update
+- View
 
+Use the following command line to get help
+
+```bash
+./target/release/operator-catalog-viewer help
+```
 
 ```bash
 cd rust-catalog-operator-viewer
@@ -44,12 +52,12 @@ mirror:
 make build
 
 # download and untar the blobs
-./target/release/operator-catalog-viewer --ui false --config examples/imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
+./target/release/operator-catalog-viewer update --config-file examples/imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
 
 # copy the full dir from the previous step 
 # execute the viewer
 # in my instance the full path is ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/
-./target/release/operator-catalog-viewer --ui true --config examples/imagesetconfig.yaml --loglevel debug --base-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
+./target/release/operator-catalog-viewer view --configs-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
 
 ```
 
@@ -80,3 +88,12 @@ check the code coverage
 $ grcov . --binary-path ./target/debug/deps/ -s . -t html --branch --ignore-not-existing --ignore '../*' --ignore "/*" --ignore "src/main.rs" -o target/coverage/html
 
 ```
+
+**NB** A makefile s included that simplifies the testing and code coverage 
+
+```bash
+make test && make coverage
+
+```
+
+Also not its really a pointless exercize adding unit tests for a TUI. Only the update section of the code has unit tests

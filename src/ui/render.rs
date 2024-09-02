@@ -4,6 +4,7 @@ use mirror_catalog::*;
 use ratatui::widgets::ListState;
 use ratatui::{prelude::*, widgets::*};
 use std::collections::HashMap;
+use std::process;
 use std::{env, io};
 
 #[derive(Debug, Clone)]
@@ -84,9 +85,20 @@ impl App {
         );
 
         // add the actual catalog of interest in the header
-        let catalog = base_dir.split("/working-dir/").nth(1).unwrap();
-        let catalog_name = catalog.split("/cache/").nth(0).unwrap();
-        let title = format!("catalog viewer [ {} ]", catalog_name.replace("/", ":"));
+        // only redhat operators are supported
+        let title: String;
+        if base_dir.contains("redhat") {
+            let catalog = base_dir.split("redhat").nth(1).unwrap();
+            let catalog_name = catalog.split("/cache/").nth(0).unwrap();
+            title = format!(
+                "catalog viewer [ {}{} ]",
+                "redhat",
+                catalog_name.replace("/", ":")
+            );
+        } else {
+            log.warn("only redhat-operators are supported");
+            process::exit(1);
+        }
 
         Self {
             name: title.clone(),
