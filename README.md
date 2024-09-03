@@ -21,7 +21,7 @@ Ensure that you have the correct permissions set in the $XDG_RUNTIME_DIR/contain
 
 You can download a pull secret from https://console.redhat.com/openshift/install/pull-secret and copy it to $XDG_RUNTIME_DIR/containers/auth.json
 
-**NB** In the lates update the command line now has 2 subcommands 
+**NB** In the latest update the command line now has 2 subcommands i.e 
 - Update
 - View
 

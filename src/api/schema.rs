@@ -10,6 +10,7 @@ use clap::{Parser, Subcommand};
 pub struct Cli {
     #[command(subcommand)]
     pub command: Option<Commands>,
+
     /// set the loglevel. Valid arguments are info, debug, trace
     #[arg(value_enum, long, value_name = "loglevel", default_value = "info")]
     pub loglevel: Option<String>,
