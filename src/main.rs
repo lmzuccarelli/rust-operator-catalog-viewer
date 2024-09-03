@@ -7,9 +7,10 @@ use crossterm::{
 use custom_logger::*;
 use mirror_catalog::DeclarativeConfig;
 use mirror_config::*;
-use mirror_copy::ImplRegistryInterface;
+use mirror_copy::ImplDownloadImageInterface;
 use ratatui::prelude::*;
 use std::io::stdout;
+use std::path::Path;
 use std::process;
 use tokio;
 
@@ -53,7 +54,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match &args.command {
         Some(Commands::Update {
-            base_dir,
+            working_dir,
             config_file,
             all_arch,
         }) => {
@@ -73,14 +74,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 ));
 
                 // initialize the client request interface
-                let reg_con = ImplRegistryInterface {};
+                let reg_con = ImplDownloadImageInterface {};
 
                 // check for release image
                 if isc_config.mirror.operators.is_some() {
                     get_operator_catalog(
                         reg_con.clone(),
                         log,
-                        base_dir.clone(),
+                        working_dir.clone(),
                         false,
                         true,
                         isc_config.mirror.operators.unwrap(),
@@ -112,6 +113,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
                 log.debug(&format!("[main] (dev-mode) updated configs {:#?}", res));
                 process::exit(0);
+            }
+            if !Path::new(&configs_dir.clone()).exists() {
+                log.error("[main] the configs directory selecetd does not exist");
+                process::exit(1);
             }
 
             init_error_hooks()?;

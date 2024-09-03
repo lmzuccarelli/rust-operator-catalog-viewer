@@ -4,11 +4,11 @@ use mirror_auth::*;
 use mirror_catalog::*;
 use mirror_catalog_index::*;
 use mirror_config::Operator;
-use mirror_copy::{FsLayer, RegistryInterface};
+use mirror_copy::DownloadImageInterface;
 use mirror_error::MirrorError;
 use mirror_utils::{
     fs_handler, parse_image, parse_json_manifest_operator, parse_json_manifestlist,
-    process_and_update_manifest,
+    process_and_update_manifest, FsLayer,
 };
 use std::collections::HashMap;
 use std::fs::DirBuilder;
@@ -16,7 +16,7 @@ use std::os::unix::fs::DirBuilderExt;
 use std::path::Path;
 
 // download the latest catalog
-pub async fn get_operator_catalog<T: RegistryInterface + Clone>(
+pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
     reg_con: T,
     log: &Logging,
     dir: String,
@@ -179,7 +179,6 @@ pub async fn get_operator_catalog<T: RegistryInterface + Clone>(
                         blob_sum: l.digest.clone(),
                         original_ref: Some(ir.name.clone()),
                         size: Some(l.size),
-                        number: None,
                     };
                     fslayers.insert(0, fsl);
                 }
@@ -237,7 +236,6 @@ mod tests {
     // this brings everything from parent's scope into this scope
     use super::*;
     use async_trait::async_trait;
-    use mirror_copy::Manifest;
     use std::fs;
 
     macro_rules! aw {
@@ -280,7 +278,7 @@ mod tests {
         struct Fake {}
 
         #[async_trait]
-        impl RegistryInterface for Fake {
+        impl DownloadImageInterface for Fake {
             async fn get_manifest(
                 &self,
                 url: String,
@@ -342,31 +340,6 @@ mod tests {
             ) -> Result<(), MirrorError> {
                 log.info("testing logging in fake test");
                 Ok(())
-            }
-
-            async fn get_blobs(
-                &self,
-                _log: &Logging,
-                _dir: String,
-                _url: String,
-                _token: String,
-                _layers: Vec<FsLayer>,
-            ) -> Result<String, MirrorError> {
-                Ok("ok".to_string())
-            }
-
-            // not used in the viewer
-            async fn push_image(
-                &self,
-                log: &Logging,
-                _dir: String,
-                _sub_component: String,
-                _url: String,
-                _token: String,
-                _manifest: Manifest,
-            ) -> Result<String, MirrorError> {
-                log.info("testing logging in fake test");
-                Ok(String::from("test"))
             }
         }
 

@@ -23,10 +23,10 @@ pub enum Commands {
         #[arg(
             short,
             long,
-            value_name = "base-dir",
+            value_name = "wroking-dir",
             help = "Sets the directory used to share existing caches with other catalog tooling (required)"
         )]
-        base_dir: String,
+        working_dir: String,
 
         /// config file to use
         #[arg(short, long, value_name = "config-file")]

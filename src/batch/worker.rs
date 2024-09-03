@@ -3,11 +3,12 @@ use futures::stream::FuturesUnordered;
 use futures::stream::StreamExt;
 use mirror_auth::get_token;
 use mirror_auth::ImplTokenInterface;
-use mirror_copy::*;
+use mirror_copy::DownloadImageInterface;
 use mirror_error::MirrorError;
+use mirror_utils::FsLayer;
 use std::collections::HashMap;
 
-pub async fn execute_batch<T: RegistryInterface + Clone>(
+pub async fn execute_batch<T: DownloadImageInterface + Clone>(
     reg_impl: T,
     log: &Logging,
     dir: String,
@@ -89,6 +90,8 @@ pub async fn execute_batch<T: RegistryInterface + Clone>(
 }
 #[cfg(test)]
 mod tests {
+    use mirror_copy::ImplDownloadImageInterface;
+
     // this brings everything from parent's scope into this scope
     use super::*;
     use std::fs;
@@ -144,7 +147,6 @@ mod tests {
                 blob_sum: format!("sha256:0123456789ABCDEF{:0>2}", x),
                 original_ref: Some(format!("{}/test/test-image", url)),
                 size: Some(1234),
-                number: None,
             };
             vec_fslayer.insert(0, fslayer.clone());
         }
@@ -154,7 +156,7 @@ mod tests {
             vec_fslayer.clone(),
         );
         log.hi(&format!("executing batch worker [should pass]"));
-        let fake = ImplRegistryInterface {};
+        let fake = ImplDownloadImageInterface {};
         let res = aw!(execute_batch(
             fake.clone(),
             log,
@@ -169,7 +171,6 @@ mod tests {
             blob_sum: format!("0123456789ABCDEF00"),
             original_ref: Some(format!("{}/test/test-image", url)),
             size: Some(1234),
-            number: None,
         };
         vec_fslayer.insert(0, fslayer_err);
         map.insert(
