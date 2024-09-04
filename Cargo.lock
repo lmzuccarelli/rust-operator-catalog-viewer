@@ -977,8 +977,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-auth"
-version = "0.6.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#6eede51b2323c6adb440688f74c4858ee840973b"
+version = "0.7.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-auth?branch=main#e318b32250203f6c487babe8d0ce3665d175225d"
 dependencies = [
  "async-trait",
  "base64",
