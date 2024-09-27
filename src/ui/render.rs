@@ -279,7 +279,7 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
                 ch_items.push(ListItem::new(Line::from(vec![Span::styled(
                     name,
                     Style::default()
-                        .fg(Color::LightMagenta)
+                        .fg(Color::LightBlue)
                         .add_modifier(Modifier::BOLD),
                 )])));
             } else {

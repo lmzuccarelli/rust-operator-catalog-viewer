@@ -4,7 +4,7 @@ use clap::{Parser, Subcommand};
 #[derive(Parser, Debug)]
 #[command(name = "rust-operator-catalog-viewer")]
 #[command(author = "Luigi Mario Zuccarelli <luzuccar@redhat.com>")]
-#[command(version = "0.0.1")]
+#[command(version = "0.4.0")]
 #[command(about = "Used to view redhat specific operator catalogs", long_about = None)]
 #[command(author, version, about, long_about = None)]
 pub struct Cli {
@@ -23,7 +23,7 @@ pub enum Commands {
         #[arg(
             short,
             long,
-            value_name = "wroking-dir",
+            value_name = "working-dir",
             help = "Sets the directory used to share existing caches with other catalog tooling (required)"
         )]
         working_dir: String,

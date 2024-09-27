@@ -41,11 +41,14 @@ chmod -R 755 working-dir (permissions need to be relaxed for untarred blobs)
 # create an ImageSetConfig (this uses the example in this repo)
 # note as this only refers to operators , platform releases and additionalImages should not be included
 kind: ImageSetConfiguration
-apiVersion: alpha1
+apiVersion: mirror.openshift/v3alpha1
 mirror:
   operators:
   - catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.15"
 
+Execute the following command/s
+
+```bash
 # build
 # this uses Rust build optimization (see Cargo.toml for more details)
 # current binary is 3.1M
@@ -54,7 +57,7 @@ make build
 # download and untar the blobs
 ./target/release/operator-catalog-viewer update --config-file examples/imagesetconfig.yaml --loglevel debug --base-dir ./working-dir 
 
-# copy the full dir from the previous step 
+# use the full dir link (output from console) from the previous step 
 # execute the viewer
 # in my instance the full path is ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/
 ./target/release/operator-catalog-viewer view --configs-dir ./working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
@@ -96,4 +99,4 @@ make test && make coverage
 
 ```
 
-Also not its really a pointless exercize adding unit tests for a TUI. Only the update section of the code has unit tests
+Also note I have not done any unit tests for a TUI. Only the update section of the code has unit tests.
