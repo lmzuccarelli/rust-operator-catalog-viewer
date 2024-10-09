@@ -1007,8 +1007,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog-index"
-version = "0.5.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#39aa99e22b64c9f6d2300cee04a2a26b18a5d91c"
+version = "0.7.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog-index?branch=main#739a9da25391bdd26e1713f3acbf89b900cb680c"
 dependencies = [
  "custom-logger",
  "flate2",
@@ -1033,8 +1033,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-copy"
-version = "0.7.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#b1e83aa298c32f22484bf8a5b87b3b1b5fe2cd00"
+version = "0.9.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#d90cc38665a350d17461f6ce5569a258caf63660"
 dependencies = [
  "async-trait",
  "base64",
@@ -1060,8 +1060,8 @@ source = "git+https://github.com/lmzuccarelli/rust-mirror-error?branch=main#9d9c
 
 [[package]]
 name = "mirror-utils"
-version = "0.2.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-utils?branch=main#48e742b84f79066ad2004676a844b12b0fe27a5a"
+version = "0.4.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-utils?branch=main#b0ca206209e77c5a66851ca0849f33d277eb1ea4"
 dependencies = [
  "custom-logger",
  "mirror-copy",
@@ -1178,7 +1178,7 @@ dependencies = [
 
 [[package]]
 name = "operator-catalog-viewer"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "base64",
