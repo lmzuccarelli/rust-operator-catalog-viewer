@@ -98,24 +98,28 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             operator,
         }) => {
             if dev_enable.is_some() {
+                log.debug(&format!("[main] (dev-mode) operator {:?}", operator));
                 if operator.is_none() {
                     log.error("[main] operator flag is required use --help to get a list of flags");
                     process::exit(1);
                 }
                 let op = operator.as_ref().unwrap();
                 let component = configs_dir.clone() + &op + &"/updated-configs/";
+                log.debug(&format!("[main] (dev-mode) op {}", op));
+                log.debug(&format!("[main] (dev-mode) component {}", component));
+
                 let component_base = configs_dir.clone() + &op;
                 let dc = DeclarativeConfig::get_declarativeconfig_map(component.clone());
                 log.debug(&format!(
                     "[main] (dev-mode) declarative config keys {:#?}",
                     dc.keys()
                 ));
-                let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
-                log.debug(&format!("[main] (dev-mode) updated configs {:#?}", res));
+                //let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
+                //log.debug(&format!("[main] (dev-mode) updated configs {:#?}", res));
                 process::exit(0);
             }
             if !Path::new(&configs_dir.clone()).exists() {
-                log.error("[main] the configs directory selecetd does not exist");
+                log.error("[main] the configs directory selected does not exist");
                 process::exit(1);
             }
 

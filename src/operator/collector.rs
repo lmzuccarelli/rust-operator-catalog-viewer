@@ -213,7 +213,7 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
                     log.warn("[get_operator_catalog] 'configs' directory is empty");
                 } else {
                     log.mid(&format!(
-                        "[get_operator_catalog] full path for directory 'configs' {} ",
+                        "[get_operator_catalog] full path for directory 'configs' {}/ ",
                         &config_dir
                     ));
                     DeclarativeConfig::build_updated_configs(log, config_dir.clone())

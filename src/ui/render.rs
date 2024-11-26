@@ -78,7 +78,7 @@ impl App {
         } else {
             packages = hld_packages.unwrap();
         }
-        // actaully should find the first item in the list
+        // actually should find the first item in the list
         // rather than hard code it
         let dc_map = DeclarativeConfig::get_declarativeconfig_map(
             this_base_dir.clone().to_string() + &"3scale-operator/updated-configs/",
