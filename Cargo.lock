@@ -993,8 +993,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog"
-version = "0.4.1"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#07c9cda0456e580db347cea4c634b4bfdf3c95c5"
+version = "0.5.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#99cd833bb0d579f04b8b386ea04824603af89ab3"
 dependencies = [
  "custom-logger",
  "serde",

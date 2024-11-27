@@ -114,8 +114,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     "[main] (dev-mode) declarative config keys {:#?}",
                     dc.keys()
                 ));
-                //let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
-                //log.debug(&format!("[main] (dev-mode) updated configs {:#?}", res));
+                let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
+                log.debug(&format!("[main] (dev-mode) updated configs {:#?}", res));
                 process::exit(0);
             }
             if !Path::new(&configs_dir.clone()).exists() {
