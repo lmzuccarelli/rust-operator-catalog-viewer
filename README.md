@@ -38,9 +38,9 @@ mkdir -p working-dir
 
 chmod -R 755 working-dir (permissions need to be relaxed for untarred blobs)
 
-# create an ImageSetConfig (this uses the example in this repo)
+# create an CatalogDownloadConfig (this uses the example in this repo)
 # note as this only refers to operators , platform releases and additionalImages should not be included
-kind: ImageSetConfiguration
+kind: CatalogDownloadConfig
 apiVersion: mirror.openshift/v3alpha1
 mirror:
   operators:
@@ -57,7 +57,7 @@ make build
 # I used the common cache directory that I created previously with the customized version of bulk mirroring redhat images
 # refer to the project https://github.com/lmzuccarelli/rust-image-mirror
 # Download and untar the blobs
-./target/release/operator-catalog-viewer update --config-file examples/imagesetconfig.yaml --loglevel debug --base-dir ../rust-image-mirror/working-dir 
+./target/release/operator-catalog-viewer --loglevel info update --config-file examples/catalog-download-config.yaml --working-dir ../rust-image-mirror/working-dir 
 
 # use the full dir link (output from console) from the previous step 
 # execute the viewer
