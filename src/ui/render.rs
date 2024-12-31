@@ -1,10 +1,10 @@
 use crossterm::event::{self, Event, KeyCode, KeyEventKind};
 use custom_logger::*;
 use mirror_catalog::*;
+use ratatui::layout::Flex;
 use ratatui::widgets::ListState;
 use ratatui::{prelude::*, widgets::*};
 use std::collections::HashMap;
-//use std::process;
 use std::{env, io};
 
 #[derive(Debug, Clone)]
@@ -63,6 +63,7 @@ pub struct App {
     pub declarative_config: HashMap<String, DeclarativeConfig>,
     pub path: String,
     pub last_update: usize,
+    pub show_popup: bool,
 }
 
 impl App {
@@ -109,6 +110,7 @@ impl App {
             declarative_config: dc_map,
             path: this_base_dir.clone(),
             last_update: 999,
+            show_popup: false,
         }
     }
 }
@@ -124,15 +126,22 @@ pub fn run_app<B: Backend>(terminal: &mut Terminal<B>, app: &mut App) -> io::Res
                     Char('q') | Esc => return Ok(()),
                     Down => {
                         app.packages.next();
+                        app.show_popup = false;
                     }
                     Up => {
                         app.packages.previous();
+                        app.show_popup = false;
                     }
                     Left => {
                         app.channels.previous();
+                        app.show_popup = false;
                     }
                     Right => {
                         app.channels.next();
+                        app.show_popup = false;
+                    }
+                    Char('p') => {
+                        app.show_popup = true;
                     }
                     _ => {}
                 }
@@ -190,7 +199,7 @@ pub fn render_ui(frame: &mut Frame, app: &mut App) {
     let version = env!["CARGO_PKG_VERSION"];
     let name = env!["CARGO_PKG_NAME"];
     let title = format!(
-        "{} {} 2024 [ use ▲ ▼  to change package,  ◄  ► to change channel/bundle, q to quit ]",
+        "{} {} 2024 [ use ▲ ▼  to change package,  ◄  ► to change channel/bundle, p for dependency popup, q to quit ]",
         name, version
     );
 
@@ -205,6 +214,42 @@ pub fn render_ui(frame: &mut Frame, app: &mut App) {
                 .border_type(BorderType::Plain),
         );
     frame.render_widget(copyright, chunks[2]);
+
+    // prepare popup rendering
+    if app.show_popup {
+        let id = app.channels.state.selected().unwrap();
+        let selected_name = app.channels.items[id].to_string();
+        let mut list_deps = " ".to_string();
+        let dc_res = app
+            .declarative_config
+            .get(&format!("{}=olm.bundle", selected_name.trim()));
+        if dc_res.is_some() {
+            let dc = dc_res.unwrap();
+            if dc.properties.as_ref().is_some() {
+                for item in dc.properties.as_ref().unwrap().iter() {
+                    if item.type_prop == "olm.package.required" {
+                        if item.value.package_name.is_some() {
+                            let pkg_name = item.value.package_name.as_ref().unwrap();
+                            list_deps = format!("\n  {}{}", pkg_name, list_deps);
+                        }
+                    }
+                }
+            }
+        }
+        let paragraph = Paragraph::new(list_deps)
+            .style(Style::default().fg(Color::White))
+            .alignment(Alignment::Left)
+            .block(
+                Block::default()
+                    .style(Style::default().fg(Color::Yellow))
+                    .borders(Borders::ALL)
+                    .title(format!("Dependencies [{}] ", selected_name.trim()))
+                    .border_type(BorderType::Plain),
+            );
+        let area = popup_area(size, 30, 40);
+        frame.render_widget(Clear, area);
+        frame.render_widget(paragraph, area);
+    }
 }
 
 /// render the complex view with packages, channels and bundles
@@ -407,8 +452,6 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
             for bundle in dc.related_images.clone().unwrap().iter() {
                 let b = bundle.clone();
                 // strip the registry from the image
-                //let mut splitter = b.image.splitn(2, '/');
-                //let image = splitter.nth(1).unwrap().to_string();
                 let name = b.name.split('/').last().unwrap();
                 rows.push(Row::new(vec![
                     Cell::from(Span::raw(name.to_string())),
@@ -442,4 +485,13 @@ fn render_complex_view<'a>(app: &mut App) -> (List<'a>, List<'a>, Table<'a>) {
         .widths(widths.clone());
 
     (pkg_list, ch_list, pkg_detail)
+}
+
+/// helper function to create a centered rect using up certain percentage of the available rect `r`
+fn popup_area(area: Rect, percent_x: u16, percent_y: u16) -> Rect {
+    let vertical = Layout::vertical([Constraint::Percentage(percent_y)]).flex(Flex::Center);
+    let horizontal = Layout::horizontal([Constraint::Percentage(percent_x)]).flex(Flex::Center);
+    let [area] = vertical.areas(area);
+    let [area] = horizontal.areas(area);
+    area
 }
