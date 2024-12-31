@@ -63,7 +63,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 config_file.clone()
             ));
 
-            // Parse the config serde_yaml::ImageSetConfiguration.
+            // Parse the config serde_yaml::ImageSetConfig.
             let config = ImageSetConfig::load_config(config_file.clone());
             if config.is_ok() {
                 let isc_config =

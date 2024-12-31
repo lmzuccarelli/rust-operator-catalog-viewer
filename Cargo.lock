@@ -993,8 +993,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog"
-version = "0.5.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#99cd833bb0d579f04b8b386ea04824603af89ab3"
+version = "0.6.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#81ed75f1527447756079ca11404302ba1f0c866c"
 dependencies = [
  "custom-logger",
  "serde",
@@ -1178,7 +1178,7 @@ dependencies = [
 
 [[package]]
 name = "operator-catalog-viewer"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "async-trait",
  "base64",
