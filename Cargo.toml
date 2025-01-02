@@ -1,6 +1,6 @@
 [package]
 name = "operator-catalog-viewer"
-version = "0.7.0"
+version = "0.8.0"
 edition = "2021"
 authors = ["Luigi Zuccarelli"]
 
@@ -36,7 +36,7 @@ custom-logger = { git = "https://github.com/lmzuccarelli/rust-custom-logger", br
 mirror-error = { git =  "https://github.com/lmzuccarelli/rust-mirror-error", branch = "main" }
 mirror-utils = { git =  "https://github.com/lmzuccarelli/rust-mirror-utils", branch = "main" , version = "0.4.0" }
 mirror-auth = { git = "https://github.com/lmzuccarelli/rust-mirror-auth", branch = "main", version = "0.7.0" }
-mirror-catalog = { git = "https://github.com/lmzuccarelli/rust-mirror-catalog", branch = "main" , version = "0.6.0" }
+mirror-catalog = { git = "https://github.com/lmzuccarelli/rust-mirror-catalog", branch = "main" , version = "0.7.0" }
 mirror-copy = { git = "https://github.com/lmzuccarelli/rust-mirror-copy", branch = "main", version = "0.9.0" }
 mirror-config = { git = "https://github.com/lmzuccarelli/rust-mirror-config", branch = "main", version="0.2.0" }
 mirror-catalog-index = { git = "https://github.com/lmzuccarelli/rust-mirror-catalog-index", branch = "main", version = "0.7.0"}
