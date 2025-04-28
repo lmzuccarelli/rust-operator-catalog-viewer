@@ -8,10 +8,12 @@ use custom_logger::*;
 use mirror_catalog::DeclarativeConfig;
 use mirror_config::*;
 use mirror_copy::ImplDownloadImageInterface;
+use mirror_error::MirrorError;
 use ratatui::prelude::*;
 use std::io::stdout;
 use std::path::Path;
 use std::process;
+use std::str::FromStr;
 use tokio;
 
 // define local modules
@@ -30,27 +32,15 @@ use ui::render::*;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Cli::parse();
 
-    // convert to enum
-    let mut log = &Logging {
-        log_level: Level::INFO,
-    };
+    let level = args.loglevel.as_deref().unwrap_or("info");
+    let res_log_level = LevelFilter::from_str(level)
+        .map_err(|_| MirrorError::new(&format!("invalid log level \"{level}\"")))?;
 
-    if args.loglevel.is_some() {
-        log = match args.loglevel.as_ref().unwrap().as_str() {
-            "info" => &Logging {
-                log_level: Level::INFO,
-            },
-            "debug" => &Logging {
-                log_level: Level::DEBUG,
-            },
-            "trace" => &Logging {
-                log_level: Level::TRACE,
-            },
-            _ => &Logging {
-                log_level: Level::INFO,
-            },
-        };
-    }
+    // setup logging
+    Logging::new()
+        .with_level(res_log_level)
+        .init()
+        .expect("should initialize");
 
     match &args.command {
         Some(Commands::Update {
@@ -58,20 +48,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             config_file,
             all_arch,
         }) => {
-            log.info(&format!(
-                "[main] operator-catalog-viewer {} ",
-                config_file.clone()
-            ));
+            info!("[main] operator-catalog-viewer {} ", config_file.clone());
 
             // Parse the config serde_yaml::ImageSetConfig.
             let config = ImageSetConfig::load_config(config_file.clone());
             if config.is_ok() {
                 let isc_config =
                     ImageSetConfig::parse_yaml_config(config.unwrap().clone()).unwrap();
-                log.debug(&format!(
+                debug!(
                     "[main] image set config operators {:#?}",
                     isc_config.mirror.operators
-                ));
+                );
 
                 // initialize the client request interface
                 let reg_con = ImplDownloadImageInterface {};
@@ -80,7 +67,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 if isc_config.mirror.operators.is_some() {
                     get_operator_catalog(
                         reg_con.clone(),
-                        log,
                         working_dir.clone(),
                         false,
                         true,
@@ -89,7 +75,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .await?;
                 }
             } else {
-                log.error(&format!("{}", config.err().unwrap()));
+                error!("{}", config.err().unwrap());
             }
         }
         Some(Commands::View {
@@ -98,28 +84,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             operator,
         }) => {
             if dev_enable.is_some() {
-                log.debug(&format!("[main] (dev-mode) operator {:?}", operator));
+                debug!("[main] (dev-mode) operator {:?}", operator);
                 if operator.is_none() {
-                    log.error("[main] operator flag is required use --help to get a list of flags");
+                    error!("[main] operator flag is required use --help to get a list of flags");
                     process::exit(1);
                 }
                 let op = operator.as_ref().unwrap();
                 let component = configs_dir.clone() + &op + &"/updated-configs/";
-                log.debug(&format!("[main] (dev-mode) op {}", op));
-                log.debug(&format!("[main] (dev-mode) component {}", component));
+                debug!("[main] (dev-mode) op {}", op);
+                debug!("[main] (dev-mode) component {}", component);
 
                 let component_base = configs_dir.clone() + &op;
                 let dc = DeclarativeConfig::get_declarativeconfig_map(component.clone());
-                log.debug(&format!(
-                    "[main] (dev-mode) declarative config keys {:#?}",
-                    dc.keys()
-                ));
-                let res = DeclarativeConfig::build_updated_configs(log, component_base.clone());
-                log.debug(&format!("[main] (dev-mode) updated configs {:#?}", res));
+                debug!("[main] (dev-mode) declarative config keys {:#?}", dc.keys());
+                let res = DeclarativeConfig::build_updated_configs(component_base.clone());
+                debug!("[main] (dev-mode) updated configs {:#?}", res);
                 process::exit(0);
             }
             if !Path::new(&configs_dir.clone()).exists() {
-                log.error("[main] the configs directory selected does not exist");
+                error!("[main] the configs directory selected does not exist");
                 process::exit(1);
             }
 
@@ -133,7 +116,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         }
         None => {
-            log.error("[main] sub command not recognized use --help to list commands");
+            error!("[main] sub command not recognized use --help to list commands");
             process::exit(1);
         }
     }

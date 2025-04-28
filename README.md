@@ -15,6 +15,7 @@ I used a simple approach - Occam's razor
 
 This assumes you already have installed the rust binaries (https://www.rust-lang.org/tools/install)
 
+
 Clone this repo
 
 Ensure that you have the correct permissions set in the $XDG_RUNTIME_DIR/containers/auth.json file
@@ -46,7 +47,20 @@ mirror:
   operators:
   - catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.15"
 
+```
+Building from source 
+
 Execute the following command/s
+
+**N.B.** Ensure all depenedencies are included
+
+i.e for Fedora install the following (this will vary for different distros)
+
+```
+sudo dnf groupinstall "Development Tools"
+```
+
+Use the Makefile
 
 ```bash
 # build

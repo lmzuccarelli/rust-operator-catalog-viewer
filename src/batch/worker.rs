@@ -10,7 +10,6 @@ use std::collections::HashMap;
 
 pub async fn execute_batch<T: DownloadImageInterface + Clone>(
     reg_impl: T,
-    log: &Logging,
     dir: String,
     verify_blob: bool,
     tls_verify: bool,
@@ -37,10 +36,9 @@ pub async fn execute_batch<T: DownloadImageInterface + Clone>(
         }
         // TODO: add check to see if blobs exist on disk
         let registry = hld.split("/").nth(0).unwrap();
-        log.trace(&format!("url {}", k));
+        trace!("url {}", k);
         let token = get_token(
             t_impl.clone(),
-            log,
             registry.to_string(),
             "".to_string(),
             tls_verify,
@@ -49,11 +47,10 @@ pub async fn execute_batch<T: DownloadImageInterface + Clone>(
         let mut count = 0;
         let per_position = v.len() as f32 / 61.0;
         if v.len() > 0 {
-            log.info(&format!("[execute_batch] downloading {} blobs", v.len()));
+            info!("[execute_batch] downloading {} blobs", v.len());
         }
         for layer in v.iter() {
             futs.push(reg_impl.get_blob(
-                log,
                 dir.clone(),
                 url.clone(),
                 token.clone(),
@@ -67,7 +64,7 @@ pub async fn execute_batch<T: DownloadImageInterface + Clone>(
             if count % 10 == 0 {
                 let update = count as f32 / per_position;
                 let new_bar = bar.replacen("-", "#", update.floor() as usize);
-                log.mid(&new_bar);
+                info!("{}", new_bar);
             }
         }
         // Wait for the remaining to finish.
@@ -82,7 +79,7 @@ pub async fn execute_batch<T: DownloadImageInterface + Clone>(
     for (_k, v) in map_in {
         if v.len() > 0 {
             let new_bar = bar.replacen("-", "#", 62);
-            log.mid(&new_bar);
+            info!("{}", new_bar);
             break;
         }
     }
@@ -90,6 +87,7 @@ pub async fn execute_batch<T: DownloadImageInterface + Clone>(
 }
 #[cfg(test)]
 mod tests {
+    use custom_logger::*;
     use mirror_copy::ImplDownloadImageInterface;
 
     // this brings everything from parent's scope into this scope
@@ -130,9 +128,10 @@ mod tests {
             )
             .create();
 
-        let log = &Logging {
-            log_level: Level::INFO,
-        };
+        Logging::new()
+            .with_level(LevelFilter::Info)
+            .init()
+            .expect("should initialize");
 
         macro_rules! aw {
             ($e:expr) => {
@@ -155,11 +154,10 @@ mod tests {
             format!("{}/v2/test/test-image/blobs/", no_tls_url),
             vec_fslayer.clone(),
         );
-        log.hi(&format!("executing batch worker [should pass]"));
+        info!("executing batch worker [should pass]");
         let fake = ImplDownloadImageInterface {};
         let res = aw!(execute_batch(
             fake.clone(),
-            log,
             "test-artifacts/".to_string(),
             false,
             false,
@@ -177,20 +175,16 @@ mod tests {
             format!("{}/v2/test/test-image/blobs/", url),
             vec_fslayer.clone(),
         );
-        log.hi(&format!("executing batch worker [should fail]"));
+        info!("executing batch worker [should fail]");
         let res_err = aw!(execute_batch(
             fake.clone(),
-            log,
             "test-artifacts/".to_string(),
             false,
             false,
             map.clone()
         ));
         if res_err.is_err() {
-            log.error(&format!(
-                "result -> {}",
-                res_err.as_ref().err().unwrap().to_string()
-            ));
+            error!("result -> {}", res_err.as_ref().err().unwrap().to_string());
         }
         assert_eq!(res_err.is_err(), true);
         fs::remove_dir_all("./test-artifacts/blobs-store")
