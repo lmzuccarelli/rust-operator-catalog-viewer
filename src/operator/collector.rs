@@ -18,13 +18,12 @@ use std::path::Path;
 // download the latest catalog
 pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
     reg_con: T,
-    log: &Logging,
     dir: String,
     _all_arch: bool,
     token_enable: bool,
     operators: Vec<Operator>,
 ) -> Result<(), MirrorError> {
-    log.hi("[get_operator_catalog] collector");
+    info!("[get_operator_catalog] collector");
     // set up dir to store all manifests
     fs_handler(
         format!("{}/{}", dir.clone(), "manifests/operator".to_string()),
@@ -35,8 +34,8 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
 
     // parse the config - iterate through each catalog
     for operator in operators.clone().iter() {
-        let ir = parse_image(log, operator.catalog.clone());
-        log.debug(&format!("image refs {:#?}", ir.clone()));
+        let ir = parse_image(operator.catalog.clone());
+        debug!("image refs {:#?}", ir.clone());
 
         let blobs_dir = dir.clone() + "/blobs-store";
         let manifestlist: String;
@@ -55,29 +54,28 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
         // use token to get manifest
         let token = get_token(
             t_impl.clone(),
-            log,
             ir.registry.clone(),
             "".to_string(),
             token_enable,
         )
         .await?;
-        log.trace(&format!(
+        trace!(
             "[get_operator_catalog] manifest json file {}",
             manifestlist_json
-        ));
+        );
         // construct manifest api url
         let manifest_url = &format!(
             "https://{}/v2/{}/{}/manifests/{}",
             ir.registry, ir.namespace, ir.name, ir.version
         );
 
-        log.info(&format!(
+        info!(
             "[get_operator_catalog] api call manifest for {}",
             format!(
                 "{}/{}/{}/{}",
                 ir.registry, ir.namespace, ir.name, ir.version
             )
-        ));
+        );
 
         let mfstlist_dir = format!("{}/{}/{}", dir.clone(), ir.name.clone(), ir.version.clone());
 
@@ -88,22 +86,18 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
             .await?;
         fs_handler(mfstlist_dir, "create_dir", None).await?;
 
-        let res_manifestlist = process_and_update_manifest(
-            log,
-            res.clone(),
-            manifestlist_json.clone(),
-            HashMap::new(),
-        )
-        .await?;
-        log.trace(&format!(
+        let res_manifestlist =
+            process_and_update_manifest(res.clone(), manifestlist_json.clone(), HashMap::new())
+                .await?;
+        trace!(
             "[get_operator_catalog] result from api call {}",
             res.clone()
-        ));
+        );
         if res_manifestlist.is_some() {
-            log.debug(&format!(
+            debug!(
                 "[get_operator_catalog] process_and_update_manifest change {}",
                 res_manifestlist.as_ref().unwrap().clone()
-            ));
+            );
             manifestlist = fs_handler(res_manifestlist.unwrap().clone(), "read", None).await?;
         } else {
             manifestlist = res.clone();
@@ -122,10 +116,7 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
 
             // create the full path
             let manifest_dir = manifest_json.split("manifest.json").nth(0).unwrap();
-            log.info(&format!(
-                "[get_operator_catalog] manifest directory {}",
-                manifest_dir
-            ));
+            info!("[get_operator_catalog] manifest directory {}", manifest_dir);
             fs_handler(manifest_dir.to_string(), "create_dir", None).await?;
             let mnfst_url = &format!(
                 "https://{}/v2/{}/{}/manifests/{}",
@@ -145,19 +136,18 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
                 arch.clone(),
             );
             let cache_exists = Path::new(&working_dir_cache).exists();
-            log.debug(&format!(
+            debug!(
                 "[get_operator_catalog] main operator manifest file {}",
                 manifest_json
-            ));
+            );
             let changed = process_and_update_manifest(
-                log,
                 manifest.clone(),
                 manifest_json.clone(),
                 HashMap::new(),
             )
             .await?;
             if changed.is_some() {
-                log.info("[get_operator_catalog] detected change in manifest");
+                info!("[get_operator_catalog] detected change in manifest");
                 let changed_manifest = fs_handler(changed.unwrap().clone(), "read", None).await?;
                 let res_pm = parse_json_manifest_operator(changed_manifest.clone())?;
 
@@ -189,34 +179,27 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
                 let mut hm: HashMap<String, Vec<FsLayer>> = HashMap::new();
                 hm.insert(blobs_url, fslayers.clone());
                 // use a concurrent process to get related blobs
-                execute_batch(reg_con.clone(), log, blobs_dir.clone(), false, true, hm).await?;
-                log.debug(&format!(
-                    "[get_operator_catalog] completed image index download"
-                ));
-                log.debug(&format!(
-                    "[get_operator_catalog] map {:#?}",
-                    fslayers.clone(),
-                ));
+                execute_batch(reg_con.clone(), blobs_dir.clone(), false, true, hm).await?;
+                debug!("[get_operator_catalog] completed image index download");
+                debug!("[get_operator_catalog] map {:#?}", fslayers.clone(),);
                 untar_layers(
-                    log,
                     blobs_dir.clone(),
                     working_dir_cache.clone(),
                     fslayers.clone(),
                 )
                 .await;
 
-                log.hi("[get_operator_catalog] completed untar of layers");
+                info!("[get_operator_catalog] completed untar of layers");
                 // find the directory 'configs'
-                let config_dir =
-                    find_dir(log, working_dir_cache.clone(), "configs".to_string()).await;
+                let config_dir = find_dir(working_dir_cache.clone(), "configs".to_string()).await;
                 if config_dir.len() == 0 {
-                    log.warn("[get_operator_catalog] 'configs' directory is empty");
+                    warn!("[get_operator_catalog] 'configs' directory is empty");
                 } else {
-                    log.mid(&format!(
-                        "[get_operator_catalog] full path for directory 'configs' {}/ ",
+                    info!(
+                        "[get_operator_catalog] full path for directory 'configs' \x1b[1;94m{}\x1b[0m/ ",
                         &config_dir
-                    ));
-                    DeclarativeConfig::build_updated_configs(log, config_dir.clone())
+                    );
+                    DeclarativeConfig::build_updated_configs(config_dir.clone())
                         .expect("[get_operator_catalog] should build updated configs");
                 }
             }
@@ -246,10 +229,6 @@ mod tests {
 
     #[test]
     fn get_operator_catalog_pass() {
-        let log = &Logging {
-            log_level: Level::DEBUG,
-        };
-
         // we set up a mock server for the auth-credentials
         let mut server = mockito::Server::new();
         let url = server.url();
@@ -331,14 +310,13 @@ mod tests {
 
             async fn get_blob(
                 &self,
-                log: &Logging,
                 _dir: String,
                 _url: String,
                 _token: String,
                 _verify_blob: bool,
                 _blob_sum: String,
             ) -> Result<(), MirrorError> {
-                log.info("testing logging in fake test");
+                info!("testing logging in fake test");
                 Ok(())
             }
         }
@@ -348,7 +326,6 @@ mod tests {
         let ops = vec![op.clone()];
         let res = aw!(get_operator_catalog(
             fake.clone(),
-            log,
             String::from("./test-artifacts/"),
             false,
             false,

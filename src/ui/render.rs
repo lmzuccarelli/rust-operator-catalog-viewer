@@ -1,5 +1,4 @@
 use crossterm::event::{self, Event, KeyCode, KeyEventKind};
-use custom_logger::*;
 use mirror_catalog::*;
 use ratatui::layout::Flex;
 use ratatui::widgets::ListState;
@@ -68,14 +67,11 @@ pub struct App {
 
 impl App {
     pub fn new(base_dir: String) -> Self {
-        let log = Logging {
-            log_level: Level::INFO,
-        };
         let this_base_dir = base_dir.clone().to_owned();
         let hld_packages = DeclarativeConfig::get_packages(&this_base_dir.clone().to_string());
         let mut packages: Vec<String> = vec![];
         if hld_packages.is_err() {
-            log.error("unable to get packages");
+            println!("ERROR: unable to get packages");
         } else {
             packages = hld_packages.unwrap();
         }
