@@ -52,7 +52,7 @@ Building from source
 
 Execute the following command/s
 
-**N.B.** Ensure all depenedencies are included
+**N.B.** Ensure all dependencies are included
 
 i.e for Fedora install the following (this will vary for different distros)
 

@@ -34,10 +34,10 @@ flate2 = "1.0.25"
 tar = "0.4.38"
 custom-logger = { git = "https://github.com/lmzuccarelli/rust-custom-logger", branch = "main", version = "0.2.0" }
 mirror-error = { git =  "https://github.com/lmzuccarelli/rust-mirror-error", branch = "main", version = "0.2.0" }
-mirror-utils = { git =  "https://github.com/lmzuccarelli/rust-mirror-utils", branch = "main" , version = "0.5.1" }
+mirror-utils = { git =  "https://github.com/lmzuccarelli/rust-mirror-utils", branch = "main" , version = "0.5.2" }
 mirror-auth = { git = "https://github.com/lmzuccarelli/rust-mirror-auth", branch = "main", version = "0.10.0" }
-mirror-catalog = { git = "https://github.com/lmzuccarelli/rust-mirror-catalog", branch = "main" , version = "0.10.0" }
-mirror-copy = { git = "https://github.com/lmzuccarelli/rust-mirror-copy", branch = "main", version = "0.11.0" }
+mirror-catalog = { git = "https://github.com/lmzuccarelli/rust-mirror-catalog", branch = "main" , version = "0.11.0" }
+mirror-copy = { git = "https://github.com/lmzuccarelli/rust-mirror-copy", branch = "main", version = "0.12.0" }
 mirror-config = { git = "https://github.com/lmzuccarelli/rust-mirror-config", branch = "main", version="0.2.0" }
 mirror-catalog-index = { git = "https://github.com/lmzuccarelli/rust-mirror-catalog-index", branch = "main", version = "0.8.0"}
 

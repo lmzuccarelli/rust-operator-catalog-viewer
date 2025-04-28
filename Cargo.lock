@@ -995,8 +995,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-catalog"
-version = "0.10.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#c9c98b78b1f26e788b83d60d486debf7d3efede3"
+version = "0.11.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-catalog?branch=main#d47abf1cdbe84b8d66f6342beb04def9b5b9e843"
 dependencies = [
  "custom-logger",
  "regex",
@@ -1036,8 +1036,8 @@ dependencies = [
 
 [[package]]
 name = "mirror-copy"
-version = "0.11.0"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#abc5a2ac16d116c4a3df76143c715ad82811e94d"
+version = "0.12.0"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-copy?branch=main#55ab152bc35d0df8b5a826184e4ecbf2e23792b3"
 dependencies = [
  "async-trait",
  "base64",
@@ -1064,8 +1064,8 @@ source = "git+https://github.com/lmzuccarelli/rust-mirror-error?branch=main#3cc9
 
 [[package]]
 name = "mirror-utils"
-version = "0.5.1"
-source = "git+https://github.com/lmzuccarelli/rust-mirror-utils?branch=main#c8562f72e3338b44b8d8a10e617a989afaa3e761"
+version = "0.5.2"
+source = "git+https://github.com/lmzuccarelli/rust-mirror-utils?branch=main#f0d928799b6b25c5f4d929392fac0ff4121030d1"
 dependencies = [
  "custom-logger",
  "mirror-copy",
