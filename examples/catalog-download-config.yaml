@@ -5,6 +5,7 @@ mirror:
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.12"
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.13"
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.14"
+    - catalog: "registry.redhat.io/redhat/certified-operator-index:v4.16"
     #- catalog: "registry.redhat.io/redhat/certified-operator-index:v4.16-1741840393"
     #- catalog: "registry.redhat.io/redhat/certified-operator-index:v4.14-1726779097"
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.14"
@@ -13,7 +14,8 @@ mirror:
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.15"
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.16"
     #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.17"
-    #- catalog: "registry.redhat.io/redhat/certified-operator-index:v4.16"
+    #- catalog: "registry.redhat.io/redhat/certified-operator-index:v4.18"
     #- catalog: "registry.redhat.io/redhat/community-operator-index:v4.17"
     #- catalog: registry.redhat.io/redhat/redhat-operator-index:v4.17-1738049823
-    - catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.18"
+    #- catalog: "registry.redhat.io/redhat/redhat-operator-index:v4.18"
+    #- catalog:  "registry.redhat.io/redhat/redhat-operator-index@sha256:2eb66d115e35385693a5c55e1a2ace1055734fe4c9e9ac8c738df2f3d9194eea"
