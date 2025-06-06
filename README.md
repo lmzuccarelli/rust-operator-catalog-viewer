@@ -89,6 +89,15 @@ make build
 
 ```
 
+## Troubleshooting
+
+Execute the 'update' mode first, it will auto create a config.json in the directory where you execute.
+
+Don't update or change the generated config.json file
+
+In case of accidental deletion of the config.json file , delete the directory set by --working-dir flag, this will force a download and untar of all the catalogs, and rebuild the config.json file
+
+
 ## Unit Testing & Code coverage
 
 Ensure grcov and  llvm tools-preview are installed
