@@ -1,4 +1,5 @@
 use crate::batch::worker::execute_batch;
+use crate::cli::config::ViewConfig;
 use custom_logger::*;
 use mirror_auth::*;
 use mirror_catalog::*;
@@ -31,6 +32,9 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
         None,
     )
     .await?;
+
+    let cfg_impl = ViewConfig::new();
+    let mut map_config: HashMap<String, String> = cfg_impl.read_config();
 
     // parse the config - iterate through each catalog
     for operator in operators.clone().iter() {
@@ -195,6 +199,12 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
                 if config_dir.len() == 0 {
                     warn!("[get_operator_catalog] 'configs' directory is empty");
                 } else {
+                    // add to the array
+                    let vec_full_path = config_dir.split("/").collect::<Vec<&str>>();
+                    let pos = vec_full_path.iter().position(|x| x == &"amd64").unwrap();
+                    let name = format!("{}:{}", vec_full_path[pos - 2], vec_full_path[pos - 1]);
+                    map_config.insert(name.clone(), format!("{}/", config_dir.clone()));
+
                     info!(
                         "[get_operator_catalog] full path for directory 'configs' \x1b[1;94m{}\x1b[0m/ ",
                         &config_dir
@@ -211,6 +221,7 @@ pub async fn get_operator_catalog<T: DownloadImageInterface + Clone>(
             }
         }
     }
+    cfg_impl.write_config(map_config);
     Ok(())
 }
 

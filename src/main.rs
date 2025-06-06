@@ -1,3 +1,4 @@
+use crate::cli::config::ViewConfig;
 use clap::Parser;
 use color_eyre::config::HookBuilder;
 use crossterm::{
@@ -10,8 +11,9 @@ use mirror_config::*;
 use mirror_copy::ImplDownloadImageInterface;
 use mirror_error::MirrorError;
 use ratatui::prelude::*;
+use std::collections::HashMap;
+use std::io;
 use std::io::stdout;
-use std::path::Path;
 use std::process;
 use std::str::FromStr;
 use tokio;
@@ -19,6 +21,7 @@ use tokio;
 // define local modules
 mod api;
 mod batch;
+mod cli;
 mod operator;
 mod ui;
 
@@ -89,26 +92,51 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     error!("[main] operator flag is required use --help to get a list of flags");
                     process::exit(1);
                 }
+                let dir = configs_dir.as_ref().unwrap().clone();
                 let op = operator.as_ref().unwrap();
-                let component = configs_dir.clone() + &op + &"/updated-configs/";
+                let component = dir.clone() + &op + &"/updated-configs/";
                 debug!("[main] (dev-mode) op {}", op);
                 debug!("[main] (dev-mode) component {}", component);
 
-                let component_base = configs_dir.clone() + &op;
+                let component_base = dir + &op;
                 let dc = DeclarativeConfig::get_declarativeconfig_map(component.clone());
                 debug!("[main] (dev-mode) declarative config keys {:#?}", dc.keys());
                 let res = DeclarativeConfig::build_updated_configs(component_base.clone());
                 debug!("[main] (dev-mode) updated configs {:#?}", res);
                 process::exit(0);
             }
-            if !Path::new(&configs_dir.clone()).exists() {
-                error!("[main] the configs directory selected does not exist");
+
+            let mut count = 1;
+            let mut in_map: HashMap<usize, String> = HashMap::new();
+            let cfg_impl = ViewConfig::new();
+            let map = cfg_impl.read_config();
+            info!(
+                " Please select a catalog you would like to view (use the number and press enter)\n"
+            );
+            for (k, v) in map.iter() {
+                let data = format!("{}) {}", count, k);
+                println!(" {}", data);
+                in_map.insert(count, k.to_lowercase());
+                count += 1;
+            }
+            println!("");
+
+            let mut input_line = String::new();
+            io::stdin()
+                .read_line(&mut input_line)
+                .expect("failed to read line");
+
+            let res = input_line.trim().parse();
+            if res.is_err() {
+                error!("could not parse number");
                 process::exit(1);
             }
+            let value = in_map.get(&res.unwrap()).unwrap();
+            let configs_dir = map.get(value);
 
             init_error_hooks()?;
             let mut terminal = init_terminal()?;
-            let mut app = App::new(configs_dir.clone());
+            let mut app = App::new(value.to_lowercase(), configs_dir.unwrap().to_lowercase());
             let res = run_app(&mut terminal, &mut app);
             restore_terminal()?;
             if let Err(err) = res {

@@ -1,6 +1,6 @@
 .PHONY: all test build clean
 
-all: clean test build
+all: clean build
 
 LEVEL ?= "info"
 TEST ?= ""

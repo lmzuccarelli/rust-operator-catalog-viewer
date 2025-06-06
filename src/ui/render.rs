@@ -66,7 +66,7 @@ pub struct App {
 }
 
 impl App {
-    pub fn new(base_dir: String) -> Self {
+    pub fn new(name: String, base_dir: String) -> Self {
         let this_base_dir = base_dir.clone().to_owned();
         let hld_packages = DeclarativeConfig::get_packages(&this_base_dir.clone().to_string());
         let mut packages: Vec<String> = vec![];
@@ -81,23 +81,7 @@ impl App {
             this_base_dir.clone().to_string() + &"3scale-operator/updated-configs/",
         );
 
-        // add the actual catalog of interest in the header
-        let mut catalog_name = "".to_string();
-        let catalog = base_dir.split("working-dir").nth(1);
-        if catalog.is_some() {
-            catalog_name = catalog
-                .unwrap()
-                .split("/cache/")
-                .nth(0)
-                .unwrap()
-                .to_string();
-        }
-
-        let title = format!(
-            "catalog viewer [ {}{} ]",
-            "redhat",
-            catalog_name.replace("/", ":")
-        );
+        let title = format!("catalog viewer [ {} ]", name);
 
         Self {
             name: title.clone(),

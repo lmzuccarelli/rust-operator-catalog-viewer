@@ -22,6 +22,12 @@ Ensure that you have the correct permissions set in the $XDG_RUNTIME_DIR/contain
 
 You can download a pull secret from https://console.redhat.com/openshift/install/pull-secret and copy it to $XDG_RUNTIME_DIR/containers/auth.json
 
+i.e 
+
+```
+cp pull-secret.txt $XDG_RUNTIME_DIR/containers/auth.json
+```
+
 **NB** In the latest update the command line now has 2 subcommands i.e 
 - Update
 - View
@@ -71,10 +77,15 @@ make build
 # Download and untar the blobs
 ./target/release/operator-catalog-viewer --loglevel info update --config-file examples/catalog-download-config.yaml --working-dir working-dir 
 
-# use the full dir link (output from console) from the previous step 
 # execute the viewer
-# in my instance the full path is working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/
-./target/release/operator-catalog-viewer view --configs-dir working-dir/redhat-operator-index/v4.15/cache/071eb5/configs/ 
+# it should prompt you with a list obtained from the previous step ( i.e update)
+./target/release/operator-catalog-viewer view  
+
+# in my example
+[ INFO  2025-06-06 15:14:42.435 ] :  Please select a catalog you would like to view (use the number and press enter)
+
+ 1) redhat-operator-index:v4.18
+ 2) certified-operator-index:v4.16
 
 ```
 

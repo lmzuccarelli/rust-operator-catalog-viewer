@@ -44,8 +44,7 @@ pub enum Commands {
             value_name = "configs-dir",
             help = "The directory (location) where to find the untarred configs of speciifc the operetor (required)"
         )]
-        configs_dir: String,
-
+        configs_dir: Option<String>,
         #[arg(short, long, value_name = "dev-enable")]
         dev_enable: Option<bool>,
 
