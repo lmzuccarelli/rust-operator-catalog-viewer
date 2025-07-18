@@ -52,4 +52,14 @@ pub enum Commands {
         #[arg(short, long, value_name = "operator", default_value = "")]
         operator: Option<String>,
     },
+    /// Delete subcommand to delete folder and entries in config.json
+    Delete {
+        #[arg(
+            short,
+            long,
+            value_name = "configs-dir",
+            help = "The directory (location) where to find the untarred configs of speciifc the operetor (required)"
+        )]
+        configs_dir: Option<String>,
+    },
 }

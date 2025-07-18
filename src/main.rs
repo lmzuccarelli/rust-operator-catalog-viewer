@@ -11,8 +11,7 @@ use mirror_config::*;
 use mirror_copy::ImplDownloadImageInterface;
 use mirror_error::MirrorError;
 use ratatui::prelude::*;
-use std::collections::HashMap;
-use std::io;
+use std::fs;
 use std::io::stdout;
 use std::process;
 use std::str::FromStr;
@@ -106,42 +105,34 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 process::exit(0);
             }
 
-            let mut count = 1;
-            let mut in_map: HashMap<usize, String> = HashMap::new();
             let cfg_impl = ViewConfig::new();
             let map = cfg_impl.read_config();
-            info!(
-                " Please select a catalog you would like to view (use the number and press enter)\n"
-            );
-            for (k, v) in map.iter() {
-                let data = format!("{}) {}", count, k);
-                println!(" {}", data);
-                in_map.insert(count, k.to_lowercase());
-                count += 1;
-            }
-            println!("");
+            let result = cfg_impl.get_config(map);
 
-            let mut input_line = String::new();
-            io::stdin()
-                .read_line(&mut input_line)
-                .expect("failed to read line");
-
-            let res = input_line.trim().parse();
-            if res.is_err() {
-                error!("could not parse number");
-                process::exit(1);
-            }
-            let value = in_map.get(&res.unwrap()).unwrap();
-            let configs_dir = map.get(value);
-
+            // start tui
             init_error_hooks()?;
             let mut terminal = init_terminal()?;
-            let mut app = App::new(value.to_lowercase(), configs_dir.unwrap().to_lowercase());
+            let (value, configs_dir) = result.split_once("*").unwrap();
+            let mut app = App::new(value.to_owned().to_string(), configs_dir.to_lowercase());
             let res = run_app(&mut terminal, &mut app);
             restore_terminal()?;
             if let Err(err) = res {
                 println!("{err:?}");
             }
+        }
+        Some(Commands::Delete { configs_dir }) => {
+            let cfg_impl = ViewConfig::new();
+            let mut map = cfg_impl.read_config();
+            let result = cfg_impl.get_config(map.clone());
+            let (value, configs_dir) = result.split_once("*").unwrap();
+            let replaced = value.replace(":", "/");
+            let delete_dir = configs_dir.split(&replaced).nth(0).unwrap();
+            // TODO: needs some work - remove files in subfolders
+            // then delete directory
+            // fs::remove_dir_all(delete_dir).expect("should delete directory");
+            map.remove_entry(value);
+            cfg_impl.write_config(map);
+            info!("reference {} removed", value);
         }
         None => {
             error!("[main] sub command not recognized use --help to list commands");

@@ -87,6 +87,9 @@ make build
  1) redhat-operator-index:v4.18
  2) certified-operator-index:v4.16
 
+# delete config and directory
+./target/release/operator-catalog-viewer delete  
+
 ```
 
 ## Troubleshooting
